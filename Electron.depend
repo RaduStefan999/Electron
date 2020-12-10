@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1607552107 source:d:\proiect ip\electron\main.cpp
+	<iostream>
+	<winbgim.h>
+	<graphics.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+

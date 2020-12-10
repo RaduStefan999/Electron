@@ -1,0 +1,16 @@
+<Nume piesa>
+<Numar noduri>
+{
+coordonate noduri
+}
+"Descriere"
+{
+   <fig_geometrica> coordonate figura
+}
+
+
+Legenda:
+<fig_geometrica>
+"l":= linie
+"c": cerc
+"a": arc
