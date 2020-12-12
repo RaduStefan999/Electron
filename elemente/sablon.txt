@@ -12,5 +12,6 @@ coordonate noduri
 Legenda:
 <fig_geometrica>
 "l":= linie
-"c": cerc
-"a": arc
+"c":= cerc
+"a":= arc de cerc
+"e":= arc de elipsa

@@ -1,9 +1,16 @@
 # depslib dependency file v1.0
-1607552107 source:d:\proiect ip\electron\main.cpp
+1607761603 source:d:\proiect ip\electron\main.cpp
 	<iostream>
 	<winbgim.h>
 	<graphics.h>
 	<windows.h>
 	<stdio.h>
 	<stdlib.h>
+
+1607687247 source:d:\ip\ciorna\main.cpp
+	<stdio.h>
+	<graphics.h>
+	<conio.h>
+	<iostream>
+	<windows.h>
 
