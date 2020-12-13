@@ -14,11 +14,36 @@
 	<iostream>
 	<windows.h>
 
-1607864538 source:c:\users\raducu999\documents\proiecte facultate\electron\main.cpp
+1607899871 source:c:\users\raducu999\documents\proiecte facultate\electron\main.cpp
 	<iostream>
 	<winbgim.h>
 	<graphics.h>
 	<windows.h>
 	<stdio.h>
 	<stdlib.h>
+	"headers/UI.h"
+	"headers/board.h"
+
+1607899637 c:\users\raducu999\documents\proiecte facultate\electron\headers\ui.h
+	<fstream>
+	<winbgim.h>
+	<graphics.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	"board.h"
+
+1607899871 c:\users\raducu999\documents\proiecte facultate\electron\headers\board.h
+	<iostream>
+	<winbgim.h>
+	<graphics.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+
+1607899890 source:c:\users\raducu999\documents\proiecte facultate\electron\src\board.cpp
+	"../headers/board.h"
+
+1607900446 source:c:\users\raducu999\documents\proiecte facultate\electron\src\ui.cpp
+	"../headers/UI.h"
 
