@@ -14,13 +14,14 @@
 	<iostream>
 	<windows.h>
 
-1607899871 source:c:\users\raducu999\documents\proiecte facultate\electron\main.cpp
+1607903560 source:c:\users\raducu999\documents\proiecte facultate\electron\main.cpp
 	<iostream>
 	<winbgim.h>
 	<graphics.h>
 	<windows.h>
 	<stdio.h>
 	<stdlib.h>
+	<cstring>
 	"headers/UI.h"
 	"headers/board.h"
 
@@ -33,7 +34,7 @@
 	<stdlib.h>
 	"board.h"
 
-1607899871 c:\users\raducu999\documents\proiecte facultate\electron\headers\board.h
+1607903560 c:\users\raducu999\documents\proiecte facultate\electron\headers\board.h
 	<iostream>
 	<winbgim.h>
 	<graphics.h>
@@ -41,9 +42,9 @@
 	<stdio.h>
 	<stdlib.h>
 
-1607899890 source:c:\users\raducu999\documents\proiecte facultate\electron\src\board.cpp
+1607904009 source:c:\users\raducu999\documents\proiecte facultate\electron\src\board.cpp
 	"../headers/board.h"
 
-1607900446 source:c:\users\raducu999\documents\proiecte facultate\electron\src\ui.cpp
+1607901461 source:c:\users\raducu999\documents\proiecte facultate\electron\src\ui.cpp
 	"../headers/UI.h"
 

@@ -4,19 +4,18 @@
 
 using namespace std;
 
-void setPattern(int x,int y)
+void setPattern(int xa,int ya, int xb, int yb)
 {
     int i,j;
     setbkcolor(WHITE);
     cleardevice();
     setcolor(COLOR(200,200,200));
-    for(i=laturaPatrat; i<y; i=i+laturaPatrat)
+    for(i=ya; i<yb; i=i+laturaPatrat)
     {
-        line(0,i,x,i);
-        line(i,0,i,y);
+        line(xa,i,xb,i);
     }
-    for(j=i; j<x; j=j+laturaPatrat)
-        line(j,0,j,y);
+    for(j=xa; j<xb; j=j+laturaPatrat)
+        line(j,ya,j,yb);
     setcolor(BLACK);
     setlinestyle(0,0,3);
 
@@ -38,6 +37,7 @@ void obtinePunctUtil(POINT A, POINT &B)
 
 void punePiesa(FILE *f, POINT c)
 {
+    setlinestyle(0,0,3);
     linesettingstype linfo;
     getlinesettings(&linfo);
     cout<<linfo.thickness;

@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void setPattern(int x,int y);
+void setPattern(int xa,int ya, int xb, int yb);
 void obtinePunctUtil(POINT A, POINT &B);
 void punePiesa(FILE *f, POINT c);
 

@@ -26,7 +26,7 @@ void setButtons(Buttons *ButtonsList)
 
         ifstream text (curentButton.elementRoute);
         char nume[100];
-        text >> nume;
+        text.getline(nume, 255);
         outtextxy (curentButton.shape.x + curentButton.shape.width/2, curentButton.shape.y + curentButton.shape.height/2 - 7, nume);
 
         ButtonsList -> buttons[ButtonsList -> lg] = curentButton;

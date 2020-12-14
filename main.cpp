@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <cstring>
 
 #include "headers/UI.h"
 #include "headers/board.h"
@@ -12,17 +13,17 @@ using namespace std;
 
 Buttons ButtonsList;
 Mouse mouse;
+char elementRuta[100];
 
-
-void boardUpdate()
+void boardUpdate(int xa, int ya, int xb, int yb)
 {
 
     POINT cursorPosition,P;
-    if(mouse.LMBClick){
+    if(mouse.LMBClick && (xa < mouse.x && ya < mouse.y && xb > mouse.x && yb > mouse.y)){
         clearmouseclick(WM_LBUTTONDOWN);
         FILE *f;
 
-        if ((f = fopen("elemente\\condensator.txt","r")) == NULL){
+        if ((f = fopen(elementRuta,"r")) == NULL){
             printf("Error! opening file");
             exit(1);
         }
@@ -43,7 +44,7 @@ void buttonsUpdate()
             ButtonsList.buttons[i].shape.collor = ButtonsList.buttons[i].highlightCollor;
             if (mouse.LMBClick)
             {
-                //am apasat pe buton
+                strcpy(elementRuta, ButtonsList.buttons[i].elementRoute);
             }
         }
         else
@@ -62,13 +63,13 @@ void openApp()
 
     initwindow(xmax, ymax, "");
 
-    setPattern(xmax,ymax);
+    setPattern(450, 200, xmax - 100, ymax - 100);
     setButtons(&ButtonsList);
 
     while(!GetAsyncKeyState(VK_ESCAPE)){
         mouseUpdate(&mouse);
         buttonsUpdate();
-        boardUpdate();
+        boardUpdate(450, 200, xmax - 100, ymax - 100);
     }
 
     closegraph();
