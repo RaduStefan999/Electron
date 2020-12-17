@@ -45,7 +45,7 @@ bool contains (RectangleShape shape, Mouse mouse)
     return false;
 }
 
-void draw (RectangleShape shape)
+void drawRectangle (RectangleShape shape)
 {
     setcolor(COLOR(shape.collor.r, shape.collor.g, shape.collor.b));
     setlinestyle(0,0,10);
@@ -57,12 +57,20 @@ void mouseUpdate(Mouse *mouse)
     mouse -> x = mousex();
     mouse -> y = mousey();
 
-    mouse -> LMBClick = mouse -> RMBClick = false;
+    mouse -> LMBClick = mouse -> RMBClick = mouse -> justDropped = false ;
 
     if(ismouseclick(WM_LBUTTONDOWN))
     {
         mouse -> LMBClick = true;
+        mouse -> isDraging = true;
         clearmouseclick(WM_LBUTTONDOWN);
+    }
+
+    if(ismouseclick(WM_LBUTTONUP))
+    {
+        mouse -> isDraging = false;
+        mouse -> justDropped = true;
+        clearmouseclick(WM_LBUTTONUP);
     }
 
     if(ismouseclick(WM_RBUTTONDOWN))

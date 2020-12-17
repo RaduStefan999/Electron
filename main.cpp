@@ -15,24 +15,46 @@ Buttons ButtonsList;
 Mouse mouse;
 char elementRuta[100];
 
-void boardUpdate(int xa, int ya, int xb, int yb)
+Board board;
+int indexCurrentDraggingPiesa = -1;
+
+void boardUpdate()
 {
-
     POINT cursorPosition,P;
-    if(mouse.LMBClick && (xa < mouse.x && ya < mouse.y && xb > mouse.x && yb > mouse.y)){
-        clearmouseclick(WM_LBUTTONDOWN);
-        FILE *f;
 
-        if ((f = fopen(elementRuta,"r")) == NULL){
-            printf("Error! opening file");
-            exit(1);
+    cursorPosition.x = mouse.x;
+    cursorPosition.y = mouse.y;
+    obtinePunctUtil(cursorPosition, P);
+
+
+    if(mouse.LMBClick && (board.xa < mouse.x && board.ya < mouse.y && board.xb > mouse.x && board.yb > mouse.y))
+    {
+        indexCurrentDraggingPiesa = indexOcupiesSpace(board, cursorPosition);
+
+        if (indexCurrentDraggingPiesa == -1)
+        {
+            board.elements[board.elements_lg].x = P.x;
+            board.elements[board.elements_lg].y = P.y;
+
+            board.elements[board.elements_lg].width = 3;
+            board.elements[board.elements_lg].height = 1;
+
+            strcpy(board.elements[board.elements_lg].source, elementRuta);
+            board.elements_lg++;
+
+            drawBoard(board, true);
         }
-        cursorPosition.x=mousex();
-        cursorPosition.y=mousey();
-        obtinePunctUtil(cursorPosition, P);
-        punePiesa(f,P);
     }
+    if (mouse.justDropped && (board.xa < mouse.x && board.ya < mouse.y && board.xb > mouse.x && board.yb > mouse.y))
+    {
+        if (indexCurrentDraggingPiesa != -1 && indexOcupiesSpace(board, cursorPosition) == -1)
+        {
+            board.elements[indexCurrentDraggingPiesa].x = P.x;
+            board.elements[indexCurrentDraggingPiesa].y = P.y;
 
+            drawBoard(board, true);
+        }
+    }
 }
 
 void buttonsUpdate()
@@ -52,7 +74,7 @@ void buttonsUpdate()
             ButtonsList.buttons[i].shape.collor = ButtonsList.buttons[i].normalCollor;
         }
 
-        draw(ButtonsList.buttons[i].shape);
+        drawRectangle(ButtonsList.buttons[i].shape);
     }
 }
 
@@ -61,15 +83,16 @@ void openApp()
     int xmax=GetSystemMetrics(SM_CXSCREEN);
     int ymax=GetSystemMetrics(SM_CYSCREEN);
 
-    initwindow(xmax, ymax, "");
+    board.xa = 450; board.ya = 200; board.xb = xmax - 50; board.yb = ymax - 50;
 
-    setPattern(450, 200, xmax - 100, ymax - 100);
+    initwindow(xmax, ymax, "");
+    drawBoard(board, false);
     setButtons(&ButtonsList);
 
     while(!GetAsyncKeyState(VK_ESCAPE)){
         mouseUpdate(&mouse);
         buttonsUpdate();
-        boardUpdate(450, 200, xmax - 100, ymax - 100);
+        boardUpdate();
     }
 
     closegraph();

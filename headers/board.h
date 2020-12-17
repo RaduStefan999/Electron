@@ -7,6 +7,9 @@
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <algorithm>
+
+#include "UI.h"
 
 struct connectionPoint
 {
@@ -22,8 +25,17 @@ struct boardElement
     connectionPoint connectionPoints[100];
 };
 
-void setPattern(int xa,int ya, int xb, int yb);
+struct Board
+{
+    int xa, ya, xb, yb;
+    int elements_lg;
+    boardElement elements[100];
+};
+
+void drawBoard (Board board, bool redraw);
+void setPattern(Board board);
 void obtinePunctUtil(POINT A, POINT &B);
 void punePiesa(FILE *f, POINT c);
+int indexOcupiesSpace(Board board, POINT P);
 
 #endif // board_H

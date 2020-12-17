@@ -14,6 +14,7 @@ struct Mouse
 {
     int x, y;
     bool LMBClick, RMBClick;
+    bool isDraging, justDropped;
 };
 
 struct Collor
@@ -44,7 +45,7 @@ struct Buttons
 
 void setButtons(Buttons *ButtonsList);
 bool contains (RectangleShape shape, Mouse mouse);
-void draw (RectangleShape shape);
+void drawRectangle (RectangleShape shape);
 void mouseUpdate(Mouse *mouse);
 
 #endif // UI_H

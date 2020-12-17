@@ -4,23 +4,67 @@
 
 using namespace std;
 
-void setPattern(int xa,int ya, int xb, int yb)
+void drawBoard (Board board, bool redraw)
+{
+    if (!redraw)
+    {
+        setbkcolor(WHITE);
+        cleardevice();
+    }
+
+    setcolor(COLOR(100, 0, 0));
+    setlinestyle(0,0,1);
+    rectangle(board.xa - 1, board.ya - 1, board.xb + 1, board.yb + 1);
+    floodfill(board.xa, board.ya, COLOR(100, 0, 0));
+
+    setPattern(board);
+
+    for (int i = 0; i < board.elements_lg; i++)
+    {
+        FILE *f;
+        POINT P;
+
+        if ((f = fopen(board.elements[i].source,"r")) == NULL){
+            printf("Error! opening file");
+            exit(1);
+        }
+
+        P.x = board.elements[i].x;
+        P.y = board.elements[i].y;
+
+        punePiesa(f, P);
+
+    }
+}
+
+void setPattern(Board board)
 {
     int i,j;
-    setbkcolor(WHITE);
-    cleardevice();
     setcolor(COLOR(200,200,200));
-    for(i=ya; i<yb; i=i+laturaPatrat)
+    for(i=board.ya; i<board.yb; i=i+laturaPatrat)
     {
-        line(xa,i,xb,i);
+        line(board.xa,i,board.xb,i);
     }
-    for(j=xa; j<xb; j=j+laturaPatrat)
-        line(j,ya,j,yb);
+    for(j=board.xa; j<board.xb; j=j+laturaPatrat)
+        line(j,board.ya,j,board.yb);
     setcolor(BLACK);
-    setlinestyle(0,0,3);
-
-
 }
+
+int indexOcupiesSpace(Board board, POINT P)
+{
+    int indexPiesa = -1;
+
+    for (int i = 0; i < board.elements_lg; i++)
+    {
+        if ((abs(board.elements[i].x - P.x) < board.elements[i].width * laturaPatrat) && (abs(board.elements[i].y - P.y) < board.elements[i].height * laturaPatrat))
+        {
+            indexPiesa = i;
+
+        }
+    }
+    return indexPiesa;
+}
+
 void obtinePunctUtil(POINT A, POINT &B)
 {
 
@@ -40,7 +84,7 @@ void punePiesa(FILE *f, POINT c)
     setlinestyle(0,0,3);
     linesettingstype linfo;
     getlinesettings(&linfo);
-    cout<<linfo.thickness;
+    //cout<<linfo.thickness;
 
     char text[20];
     fgets(text,20,f);
@@ -83,7 +127,4 @@ void punePiesa(FILE *f, POINT c)
             ellipse(c.x+laturaPatrat*cf[0], c.y+laturaPatrat*cf[1],cf[2],cf[3],laturaPatrat*cf[4],laturaPatrat*cf[5]);
         }
     }
-
-
-
 }
