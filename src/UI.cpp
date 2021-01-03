@@ -22,7 +22,7 @@ void setButtons(Buttons *ButtonsList)
         POINT P;
         P.x = curentButton.shape.x + curentButton.shape.width/4;
         P.y = curentButton.shape.y + curentButton.shape.height/2;
-        punePiesa(f,P);
+        puneSimbol(f,P);
 
         ifstream text (curentButton.elementRoute);
         char nume[100];
@@ -48,7 +48,7 @@ bool contains (RectangleShape shape, Mouse mouse)
 void drawRectangle (RectangleShape shape)
 {
     setcolor(COLOR(shape.collor.r, shape.collor.g, shape.collor.b));
-    setlinestyle(0,0,10);
+    setlinestyle(0,0,5);
     rectangle(shape.x, shape.y, shape.x + shape.width, shape.y + shape.height);
 }
 

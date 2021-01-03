@@ -2,40 +2,40 @@
 
 10 20 270 100
 50 50 50
-100 100 100
+200 200 200
 elemente\condensator.txt
 
 10 140 270 100
 50 50 50
-100 100 100
+200 200 200
 elemente\dioda.txt
 
 10 260 270 100
 50 50 50
-100 100 100
+200 200 200
 elemente\dioda_zen.txt
 
 10 380 270 100
 50 50 50
-100 100 100
+200 200 200
 elemente\generator.txt
 
 10 500 270 100
 50 50 50
-100 100 100
+200 200 200
 elemente\inductor.txt
 
 10 620 270 100
 50 50 50
-100 100 100
+200 200 200
 elemente\rezistor.txt
 
 10 740 270 100
 50 50 50
-100 100 100
+200 200 200
 elemente\sursa_ac.txt
 
 10 860 270 100
 50 50 50
-100 100 100
+200 200 200
 elemente\sursa_tensiune.txt

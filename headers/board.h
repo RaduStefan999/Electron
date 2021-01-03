@@ -14,6 +14,7 @@
 struct connectionPoint
 {
     int x, y, r;
+    bool start;
     connectionPoint *legatura;
 };
 
@@ -35,7 +36,11 @@ struct Board
 void drawBoard (Board board, bool redraw);
 void setPattern(Board board);
 void obtinePunctUtil(POINT A, POINT &B);
-void punePiesa(FILE *f, POINT c);
+connectionPoint *getConnectionPoint(Board &board, POINT cursorPosition);
+void puneSimbol(FILE *f, POINT c);
+void addBoardPiesa (POINT P, Board &board, char elementRuta[100]);
+void modifyBoardPiesa (POINT P, Board &board, int indexCurrentDraggingPiesa);
+void removePiesa(Board &board, int indexEliminaPiesa);
 int indexOcupiesSpace(Board board, POINT P);
 
 #endif // board_H

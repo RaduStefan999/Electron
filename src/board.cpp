@@ -32,8 +32,25 @@ void drawBoard (Board board, bool redraw)
         P.x = board.elements[i].x;
         P.y = board.elements[i].y;
 
-        punePiesa(f, P);
+        puneSimbol(f, P);
 
+        for (int j = 0; j < board.elements[i].connectionPoints_nr; j++)
+        {
+            setlinestyle(0,0,1);
+            setcolor(RED);
+            circle(board.elements[i].connectionPoints[j].x, board.elements[i].connectionPoints[j].y, board.elements[i].connectionPoints[j].r);
+
+            if (board.elements[i].connectionPoints[j].legatura != NULL)
+            {
+                setlinestyle(1,0,3);
+
+                if (board.elements[i].connectionPoints[j].legatura -> start)
+                {
+                    line(board.elements[i].connectionPoints[j].x, board.elements[i].connectionPoints[j].y, board.elements[i].connectionPoints[j].legatura -> x, board.elements[i].connectionPoints[j].y);
+                    line(board.elements[i].connectionPoints[j].legatura -> x, board.elements[i].connectionPoints[j].y, board.elements[i].connectionPoints[j].legatura -> x, board.elements[i].connectionPoints[j].legatura -> y);
+                }
+            }
+        }
     }
 }
 
@@ -59,10 +76,90 @@ int indexOcupiesSpace(Board board, POINT P)
         if ((abs(board.elements[i].x - P.x) < board.elements[i].width * laturaPatrat) && (abs(board.elements[i].y - P.y) < board.elements[i].height * laturaPatrat))
         {
             indexPiesa = i;
+            break;
 
         }
     }
     return indexPiesa;
+}
+
+connectionPoint *getConnectionPoint(Board &board, POINT cursorPosition)
+{
+    connectionPoint *punctGasit = NULL;
+
+    for (int i = 0; i < board.elements_lg; i++)
+    {
+        for (int j = 0; j < board.elements[i].connectionPoints_nr; j++)
+        {
+            int x = board.elements[i].connectionPoints[j].x - cursorPosition.x;
+            int y = board.elements[i].connectionPoints[j].y - cursorPosition.y;
+
+            if (x*x + y*y <= (board.elements[i].connectionPoints[j].r)*(board.elements[i].connectionPoints[j].r))
+            {
+                punctGasit = &(board.elements[i].connectionPoints[j]);
+            }
+        }
+    }
+
+    return punctGasit;
+}
+
+void addBoardPiesa (POINT P, Board &board, char elementRuta[100])
+{
+    board.elements[board.elements_lg].x = P.x;
+    board.elements[board.elements_lg].y = P.y;
+
+    board.elements[board.elements_lg].width = 2;
+    board.elements[board.elements_lg].height = 1;
+
+    board.elements[board.elements_lg].connectionPoints_nr = 2;
+
+    board.elements[board.elements_lg].connectionPoints[0].x = P.x + 45;
+    board.elements[board.elements_lg].connectionPoints[0].y = P.y;
+    board.elements[board.elements_lg].connectionPoints[0].r = 5;
+
+    board.elements[board.elements_lg].connectionPoints[1].x = P.x - 45;
+    board.elements[board.elements_lg].connectionPoints[1].y = P.y;
+    board.elements[board.elements_lg].connectionPoints[1].r = 5;
+
+    strcpy(board.elements[board.elements_lg].source, elementRuta);
+    board.elements_lg++;
+}
+
+void modifyBoardPiesa (POINT P, Board &board, int indexCurrentDraggingPiesa)
+{
+    board.elements[indexCurrentDraggingPiesa].x = P.x;
+    board.elements[indexCurrentDraggingPiesa].y = P.y;
+
+    board.elements[indexCurrentDraggingPiesa].connectionPoints[0].x = P.x + 45;
+    board.elements[indexCurrentDraggingPiesa].connectionPoints[0].y = P.y;
+    board.elements[indexCurrentDraggingPiesa].connectionPoints[0].r = 5;
+
+    board.elements[indexCurrentDraggingPiesa].connectionPoints[1].x = P.x - 45;
+    board.elements[indexCurrentDraggingPiesa].connectionPoints[1].y = P.y;
+    board.elements[indexCurrentDraggingPiesa].connectionPoints[1].r = 5;
+}
+
+void removePiesa(Board &board, int indexEliminaPiesa)
+{
+    for (int j = 0; j < board.elements[indexEliminaPiesa].connectionPoints_nr; j++)
+    {
+        if (board.elements[indexEliminaPiesa].connectionPoints[j].legatura != NULL)
+        {
+            board.elements[indexEliminaPiesa].connectionPoints[j].legatura -> legatura -> start = false;
+            board.elements[indexEliminaPiesa].connectionPoints[j].legatura -> legatura = NULL;
+
+            board.elements[indexEliminaPiesa].connectionPoints[j].start = false;
+            board.elements[indexEliminaPiesa].connectionPoints[j].legatura = NULL;
+        }
+    }
+
+    for (int i = indexEliminaPiesa; i < board.elements_lg; i++)
+    {
+        board.elements[i] = board.elements[i + 1];
+    }
+
+    board.elements_lg--;
 }
 
 void obtinePunctUtil(POINT A, POINT &B)
@@ -79,7 +176,7 @@ void obtinePunctUtil(POINT A, POINT &B)
     else B.y=A.y+(laturaPatrat-ry);
 }
 
-void punePiesa(FILE *f, POINT c)
+void puneSimbol(FILE *f, POINT c)
 {
     setlinestyle(0,0,3);
     linesettingstype linfo;
