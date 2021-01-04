@@ -8,70 +8,23 @@
 
 #include "headers/UI.h"
 #include "headers/board.h"
+#include "headers/zoomandpan.h"
 
 using namespace std;
 
 Buttons ButtonsList;
 Mouse mouse;
 char elementRuta[100];
-
 Board board;
 int indexCurrentDraggingPiesa = -1;
+
 connectionPoint *firstPoint = NULL;
 
-void boardUpdate()
-{
-    POINT cursorPosition,P;
+decalaj decalajTabla;
+double zoomScale = 1;
+int laturaPatrat = 20;
 
-    cursorPosition.x = mouse.x;
-    cursorPosition.y = mouse.y;
-    obtinePunctUtil(cursorPosition, P);
 
-    if (board.xa < mouse.x && board.ya < mouse.y && board.xb > mouse.x && board.yb > mouse.y)
-    {
-        if(mouse.LMBClick)
-        {
-            indexCurrentDraggingPiesa = indexOcupiesSpace(board, cursorPosition);
-            firstPoint = getConnectionPoint(board, cursorPosition);
-
-            if (indexCurrentDraggingPiesa == -1 && firstPoint == NULL && strlen(elementRuta) != 0)
-            {
-                addBoardPiesa(P, board, elementRuta);
-                drawBoard(board, true);
-            }
-        }
-        if (mouse.justDropped)
-        {
-            if (indexCurrentDraggingPiesa != -1 && indexOcupiesSpace(board, cursorPosition) == -1)
-            {
-                modifyBoardPiesa(P, board, indexCurrentDraggingPiesa);
-                drawBoard(board, true);
-            }
-            else
-            {
-                connectionPoint *lastPoint = getConnectionPoint(board, cursorPosition);
-                if (firstPoint != NULL && lastPoint != NULL && firstPoint != lastPoint)
-                {
-                    firstPoint -> legatura = lastPoint;
-                    firstPoint -> start = 1;
-                    lastPoint -> legatura = firstPoint;
-
-                    drawBoard(board, true);
-                }
-            }
-        }
-
-        if(mouse.RMBClick)
-        {
-            int indexEliminaPiesa = indexOcupiesSpace(board, cursorPosition);
-            if (indexEliminaPiesa != -1)
-            {
-                removePiesa(board, indexEliminaPiesa);
-                drawBoard(board, true);
-            }
-        }
-    }
-}
 
 void buttonsUpdate()
 {
@@ -94,15 +47,98 @@ void buttonsUpdate()
     }
 }
 
+void boardUpdate()
+{
+    POINT cursorPosition,P;
+    cursorPosition.x = mouse.x;
+    cursorPosition.y = mouse.y;
+
+    obtinePunctUtil(cursorPosition, P, decalajTabla); // P este transmis prin referinta, P are coord. raportate la tabla
+
+    if (board.xa < mouse.x && board.ya < mouse.y && board.xb > mouse.x && board.yb > mouse.y)
+    {
+        if(GetAsyncKeyState(VK_CONTROL))
+        {
+            if (mouse.LMBClick)
+            {
+                pan(mouse.x, mouse.y, decalajTabla);
+                drawBoard(board, true, decalajTabla);
+            }
+
+            if(GetAsyncKeyState(0x49) && zoomScale<5)  // ctrl + i= zoom in
+            {
+                zoomIn(zoomScale, decalajTabla);
+                drawBoard(board, true, decalajTabla);
+            }
+
+            if(GetAsyncKeyState(0x4F) && zoomScale>1) // ctrl + o= zoom out
+            {
+                zoomOut(zoomScale, decalajTabla);
+                drawBoard(board, true, decalajTabla);
+            }
+            if(GetAsyncKeyState(0x52)) // ctrl + r= reset zoom
+            {
+                resetPanAndZoom(decalajTabla, zoomScale);
+                drawBoard(board, true, decalajTabla);
+            }
+        }
+        else
+        {
+            if(mouse.LMBClick)
+            {
+                indexCurrentDraggingPiesa = indexOcupiesSpace(board, cursorPosition, decalajTabla);
+                firstPoint = getConnectionPoint(board, cursorPosition);
+
+                if (indexCurrentDraggingPiesa == -1 && firstPoint == NULL && strlen(elementRuta) != 0)
+                {
+                    addBoardPiesa(P, board, elementRuta);
+                    drawBoard(board, true, decalajTabla);
+                }
+            }
+            if (mouse.justDropped)
+            {
+                if (indexCurrentDraggingPiesa != -1 && indexOcupiesSpace(board, cursorPosition, decalajTabla) == -1)
+                {
+                    modifyBoardPiesa(P, board, indexCurrentDraggingPiesa);
+                    drawBoard(board, true, decalajTabla);
+                }
+                else
+                {
+                    connectionPoint *lastPoint = getConnectionPoint(board, cursorPosition);
+                    if (firstPoint != NULL && lastPoint != NULL && firstPoint != lastPoint)
+                    {
+                        firstPoint -> legatura = lastPoint;
+                        firstPoint -> start = 1;
+                        lastPoint -> legatura = firstPoint;
+
+                        drawBoard(board, true, decalajTabla);
+                    }
+                }
+            }
+
+            if(mouse.RMBClick)
+            {
+                int indexEliminaPiesa = indexOcupiesSpace(board, cursorPosition, decalajTabla);
+                if (indexEliminaPiesa != -1)
+                {
+                    removePiesa(board, indexEliminaPiesa);
+                    drawBoard(board, true, decalajTabla);
+                }
+            }
+        }
+
+    }
+}
+
 void openApp()
 {
     int xmax=GetSystemMetrics(SM_CXSCREEN);
     int ymax=GetSystemMetrics(SM_CYSCREEN);
 
-    board.xa = 450; board.ya = 200; board.xb = xmax - 50; board.yb = ymax - 50;
+    board.xa = 400; board.ya = 40; board.xb = board.xa + 1000; board.yb = board.ya+ 800;
 
     initwindow(xmax, ymax, "");
-    drawBoard(board, false);
+    drawBoard(board, false, decalajTabla);
     setButtons(&ButtonsList);
 
     while(!GetAsyncKeyState(VK_ESCAPE)){
