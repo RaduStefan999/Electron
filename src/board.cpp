@@ -31,17 +31,29 @@ void drawBoard (Board board, bool redraw, decalaj decalajTabla)
         P.y = board.elements[i].y;
 
         int xEcran, yEcran;
+
         obtineCoordEcran(P.x, P.y, xEcran, yEcran, decalajTabla, zoomScale);
         P1.x=xEcran; P1.y=yEcran;
-        if(xEcran>board.xa and xEcran<board.xb and yEcran>board.ya and yEcran<board.yb) //
-        puneSimbol(f, P1);
 
+        if(xEcran>board.xa and xEcran<board.xb and yEcran>board.ya and yEcran<board.yb)
+        {
+            puneSimbol(f, P1);
+        }
 
         for (int j = 0; j < board.elements[i].connectionPoints_nr; j++)
         {
             setlinestyle(0,0,1);
             setcolor(RED);
-            circle(board.elements[i].connectionPoints[j].x, board.elements[i].connectionPoints[j].y, board.elements[i].connectionPoints[j].r);
+
+            int xCerc, yCerc;
+
+            obtineCoordEcran(board.elements[i].connectionPoints[j].x, board.elements[i].connectionPoints[j].y, xCerc, yCerc, decalajTabla, zoomScale);
+
+            if(xCerc>board.xa and xCerc<board.xb and yCerc>board.ya and yCerc<board.yb)
+            {
+                circle(xCerc, yCerc, board.elements[i].connectionPoints[j].r);
+            }
+
 
             if (board.elements[i].connectionPoints[j].legatura != NULL)
             {
@@ -49,8 +61,15 @@ void drawBoard (Board board, bool redraw, decalaj decalajTabla)
 
                 if (board.elements[i].connectionPoints[j].legatura -> start)
                 {
-                    line(board.elements[i].connectionPoints[j].x, board.elements[i].connectionPoints[j].y, board.elements[i].connectionPoints[j].legatura -> x, board.elements[i].connectionPoints[j].y);
-                    line(board.elements[i].connectionPoints[j].legatura -> x, board.elements[i].connectionPoints[j].y, board.elements[i].connectionPoints[j].legatura -> x, board.elements[i].connectionPoints[j].legatura -> y);
+                    int xCercTarget, yCercTarget;
+                    obtineCoordEcran(board.elements[i].connectionPoints[j].legatura -> x, board.elements[i].connectionPoints[j].legatura -> y, xCercTarget, yCercTarget, decalajTabla, zoomScale);
+
+                    if(xCerc>board.xa and xCerc<board.xb and yCerc>board.ya and yCerc<board.yb && xCercTarget>board.xa and xCercTarget<board.xb and yCercTarget>board.ya and yCercTarget<board.yb)
+                    {
+                        line(xCerc, yCerc, xCercTarget, yCerc);
+                        line(xCercTarget, yCerc, xCercTarget, yCercTarget);
+                    }
+
                 }
             }
         }
@@ -100,20 +119,26 @@ int indexOcupiesSpace(Board board, POINT P, decalaj decalajTabla)
     return indexPiesa;
 }
 
-connectionPoint *getConnectionPoint(Board &board, POINT cursorPosition)
+connectionPoint *getConnectionPoint(Board &board, POINT cursorPosition, decalaj decalajTabla)
 {
     connectionPoint *punctGasit = NULL;
+
+    int x1, y1;
+    POINT P1; // punctul de pe tabla corspunzator lui P
+    obtineCoordTabla(cursorPosition.x, cursorPosition.y, x1, y1, decalajTabla, zoomScale);
+    P1.x=x1; P1.y=y1;
 
     for (int i = 0; i < board.elements_lg; i++)
     {
         for (int j = 0; j < board.elements[i].connectionPoints_nr; j++)
         {
-            int x = board.elements[i].connectionPoints[j].x - cursorPosition.x;
-            int y = board.elements[i].connectionPoints[j].y - cursorPosition.y;
+            int x = board.elements[i].connectionPoints[j].x - P1.x;
+            int y = board.elements[i].connectionPoints[j].y - P1.y;
 
             if (x*x + y*y <= (board.elements[i].connectionPoints[j].r)*(board.elements[i].connectionPoints[j].r))
             {
                 punctGasit = &(board.elements[i].connectionPoints[j]);
+                break;
             }
         }
     }

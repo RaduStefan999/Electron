@@ -39,16 +39,15 @@ struct Board
 };
 
 
-connectionPoint *getConnectionPoint(Board &board, POINT cursorPosition);
 void puneSimbol(FILE *f, POINT c);
 void addBoardPiesa (POINT P, Board &board, char elementRuta[100]);
 void modifyBoardPiesa (POINT P, Board &board, int indexCurrentDraggingPiesa);
 void removePiesa(Board &board, int indexEliminaPiesa);
 
-
 void drawBoard (Board board, bool redraw, decalaj decalajTabla);
 void setPattern(Board board, decalaj decalajTabla);
 void obtinePunctUtil(POINT A, POINT &B, decalaj decalajTabla);
 int indexOcupiesSpace(Board board, POINT P, decalaj decalajTabla);
+connectionPoint *getConnectionPoint(Board &board, POINT cursorPosition, decalaj decalajTabla);
 
 #endif // board_H

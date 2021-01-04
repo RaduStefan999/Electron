@@ -87,7 +87,7 @@ void boardUpdate()
             if(mouse.LMBClick)
             {
                 indexCurrentDraggingPiesa = indexOcupiesSpace(board, cursorPosition, decalajTabla);
-                firstPoint = getConnectionPoint(board, cursorPosition);
+                firstPoint = getConnectionPoint(board, cursorPosition, decalajTabla);
 
                 if (indexCurrentDraggingPiesa == -1 && firstPoint == NULL && strlen(elementRuta) != 0)
                 {
@@ -104,7 +104,7 @@ void boardUpdate()
                 }
                 else
                 {
-                    connectionPoint *lastPoint = getConnectionPoint(board, cursorPosition);
+                    connectionPoint *lastPoint = getConnectionPoint(board, cursorPosition, decalajTabla);
                     if (firstPoint != NULL && lastPoint != NULL && firstPoint != lastPoint)
                     {
                         firstPoint -> legatura = lastPoint;
