@@ -34,14 +34,15 @@ void drawBoard (Board board, bool redraw, decalaj decalajTabla)
         obtineCoordEcran(P.x, P.y, xEcran, yEcran, decalajTabla, zoomScale);
         P1.x=xEcran; P1.y=yEcran;
         if(xEcran>board.xa and xEcran<board.xb and yEcran>board.ya and yEcran<board.yb) //
-        puneSimbol(f, P);
+            puneSimbol(f, P1);
 
 
         for (int j = 0; j < board.elements[i].connectionPoints_nr; j++)
         {
             setlinestyle(0,0,1);
             setcolor(RED);
-            circle(board.elements[i].connectionPoints[j].x, board.elements[i].connectionPoints[j].y, board.elements[i].connectionPoints[j].r);
+            obtineCoordEcran(board.elements[i].connectionPoints[j].x, board.elements[i].connectionPoints[j].y, xEcran, yEcran, decalajTabla, zoomScale);
+            circle(xEcran, yEcran, board.elements[i].connectionPoints[j].r);
 
             if (board.elements[i].connectionPoints[j].legatura != NULL)
             {
@@ -131,13 +132,13 @@ void addBoardPiesa (POINT P, Board &board, char elementRuta[100])
 
     board.elements[board.elements_lg].connectionPoints_nr = 2;
 
-    board.elements[board.elements_lg].connectionPoints[0].x = P.x + 45;
+    board.elements[board.elements_lg].connectionPoints[0].x = P.x + 2*laturaPatrat;
     board.elements[board.elements_lg].connectionPoints[0].y = P.y;
-    board.elements[board.elements_lg].connectionPoints[0].r = 5;
+    board.elements[board.elements_lg].connectionPoints[0].r = 5*zoomScale;
 
-    board.elements[board.elements_lg].connectionPoints[1].x = P.x - 45;
+    board.elements[board.elements_lg].connectionPoints[1].x = P.x - 2*laturaPatrat;
     board.elements[board.elements_lg].connectionPoints[1].y = P.y;
-    board.elements[board.elements_lg].connectionPoints[1].r = 5;
+    board.elements[board.elements_lg].connectionPoints[1].r = 5*zoomScale;
 
     strcpy(board.elements[board.elements_lg].source, elementRuta);
     board.elements_lg++;
@@ -148,11 +149,11 @@ void modifyBoardPiesa (POINT P, Board &board, int indexCurrentDraggingPiesa)
     board.elements[indexCurrentDraggingPiesa].x = P.x;
     board.elements[indexCurrentDraggingPiesa].y = P.y;
 
-    board.elements[indexCurrentDraggingPiesa].connectionPoints[0].x = P.x + 45;
+    board.elements[indexCurrentDraggingPiesa].connectionPoints[0].x = P.x + 2*laturaPatrat;
     board.elements[indexCurrentDraggingPiesa].connectionPoints[0].y = P.y;
     board.elements[indexCurrentDraggingPiesa].connectionPoints[0].r = 5;
 
-    board.elements[indexCurrentDraggingPiesa].connectionPoints[1].x = P.x - 45;
+    board.elements[indexCurrentDraggingPiesa].connectionPoints[1].x = P.x - 2*laturaPatrat;
     board.elements[indexCurrentDraggingPiesa].connectionPoints[1].y = P.y;
     board.elements[indexCurrentDraggingPiesa].connectionPoints[1].r = 5;
 }

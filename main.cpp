@@ -20,6 +20,7 @@ int indexCurrentDraggingPiesa = -1;
 
 connectionPoint *firstPoint = NULL;
 
+bool buttonPressed=false;
 decalaj decalajTabla;
 double zoomScale = 1;
 int laturaPatrat = 20;
@@ -36,6 +37,7 @@ void buttonsUpdate()
             if (mouse.LMBClick)
             {
                 strcpy(elementRuta, ButtonsList.buttons[i].elementRoute);
+                buttonPressed=true;
             }
         }
         else
@@ -84,20 +86,20 @@ void boardUpdate()
         }
         else
         {
-            if(mouse.LMBClick)
+            if(mouse.LMBClick )
             {
                 indexCurrentDraggingPiesa = indexOcupiesSpace(board, cursorPosition, decalajTabla);
                 firstPoint = getConnectionPoint(board, cursorPosition);
-
-                if (indexCurrentDraggingPiesa == -1 && firstPoint == NULL && strlen(elementRuta) != 0)
+                if (indexCurrentDraggingPiesa == -1 && firstPoint == NULL && strlen(elementRuta) != 0 && buttonPressed)
                 {
                     addBoardPiesa(P, board, elementRuta);
                     drawBoard(board, true, decalajTabla);
+                    buttonPressed=false;
                 }
             }
             if (mouse.justDropped)
             {
-                if (indexCurrentDraggingPiesa != -1 && indexOcupiesSpace(board, cursorPosition, decalajTabla) == -1)
+                if (indexCurrentDraggingPiesa != -1 && (indexOcupiesSpace(board, cursorPosition, decalajTabla) == -1 || indexOcupiesSpace(board, cursorPosition, decalajTabla)==indexCurrentDraggingPiesa))
                 {
                     modifyBoardPiesa(P, board, indexCurrentDraggingPiesa);
                     drawBoard(board, true, decalajTabla);
