@@ -10,6 +10,11 @@
 #include <algorithm>
 
 #include "UI.h"
+#include "zoomandpan.h"
+
+extern int laturaPatrat;
+
+struct decalaj;
 
 struct connectionPoint
 {
@@ -32,10 +37,11 @@ struct Board
     boardElement elements[100];
 };
 
-void drawBoard (Board board, bool redraw);
-void setPattern(Board board);
-void obtinePunctUtil(POINT A, POINT &B);
+void drawBoard (Board board, bool redraw, decalaj decalajTabla);
+void setPattern(Board board, decalaj decalajTabla);
+void obtinePunctUtil(POINT A, POINT &B, decalaj decalajTabla);
 void punePiesa(FILE *f, POINT c);
-int indexOcupiesSpace(Board board, POINT P);
+int indexOcupiesSpace(Board board, POINT P, decalaj decalajTabla);
+
 
 #endif // board_H

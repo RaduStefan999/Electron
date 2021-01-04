@@ -50,3 +50,53 @@
 1608209487 source:c:\users\raducu999\documents\proiecte facultate\electron\src\ui.cpp
 	"../headers/UI.h"
 
+1609756933 source:c:\users\iulian\electron\main.cpp
+	<iostream>
+	<winbgim.h>
+	<graphics.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<cstring>
+	"headers/UI.h"
+	"headers/board.h"
+	"headers/zoomandpan.h"
+
+1609349545 c:\users\iulian\electron\headers\ui.h
+	<fstream>
+	<winbgim.h>
+	<graphics.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	"board.h"
+
+1609747111 c:\users\iulian\electron\headers\board.h
+	<iostream>
+	<winbgim.h>
+	<graphics.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<algorithm>
+	"UI.h"
+	"zoomandpan.h"
+
+1609757162 source:c:\users\iulian\electron\src\board.cpp
+	"../headers/board.h"
+
+1609349545 source:c:\users\iulian\electron\src\ui.cpp
+	"../headers/UI.h"
+
+1609703860 c:\users\iulian\electron\headers\zoomandpan.h
+	<iostream>
+	<winbgim.h>
+	<graphics.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	"UI.h"
+
+1609713472 source:c:\users\iulian\electron\src\zoomandpan.cpp
+	"../headers/zoomandpan.h"
+
