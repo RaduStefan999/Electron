@@ -34,7 +34,7 @@ void drawBoard (Board board, bool redraw, decalaj decalajTabla)
         obtineCoordEcran(P.x, P.y, xEcran, yEcran, decalajTabla, zoomScale);
         P1.x=xEcran; P1.y=yEcran;
         if(xEcran>board.xa and xEcran<board.xb and yEcran>board.ya and yEcran<board.yb) //
-        puneSimbol(f, P);
+        puneSimbol(f, P1);
 
 
         for (int j = 0; j < board.elements[i].connectionPoints_nr; j++)
