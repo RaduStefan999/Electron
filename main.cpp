@@ -80,7 +80,7 @@ void boardUpdate()
                 zoomOut(zoomScale, decalajTabla);
                 drawBoard(board, true, decalajTabla);
             }
-            if(GetAsyncKeyState(0x52)) // ctrl + r= reset zoom
+            if(keyboard.R_PRESS) // ctrl + r= reset zoom
             {
                 resetPanAndZoom(decalajTabla, zoomScale);
                 drawBoard(board, true, decalajTabla);

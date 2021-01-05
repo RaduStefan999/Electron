@@ -45,8 +45,9 @@ void addBoardPiesa (POINT P, Board &board, char elementRuta[100]);
 void modifyBoardPiesa (POINT P, Board &board, int indexCurrentDraggingPiesa);
 void removePiesa(Board &board, int indexEliminaPiesa);
 void rotatePoints(float points[], int rotation);
+void updateConnectionPointRotation(boardElement &element);
 
-void drawBoard (Board board, bool redraw, decalaj decalajTabla);
+void drawBoard (Board &board, bool redraw, decalaj decalajTabla);
 void setPattern(Board board, decalaj decalajTabla);
 void obtinePunctUtil(POINT A, POINT &B, decalaj decalajTabla);
 int indexOcupiesSpace(Board board, POINT P, decalaj decalajTabla);

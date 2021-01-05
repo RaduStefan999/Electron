@@ -3,7 +3,7 @@
 using namespace std;
 
 
-void drawBoard (Board board, bool redraw, decalaj decalajTabla)
+void drawBoard (Board &board, bool redraw, decalaj decalajTabla)
 {
     if (!redraw)
     {
@@ -16,6 +16,11 @@ void drawBoard (Board board, bool redraw, decalaj decalajTabla)
     rectangle(board.xa - 1, board.ya - 1, board.xb + 1, board.yb + 1);
     floodfill(board.xa, board.ya, COLOR(100, 0, 0));
     setPattern(board, decalajTabla);
+
+    for (int i = 0; i < board.elements_lg; i++)
+    {
+        updateConnectionPointRotation(board.elements[i]);
+    }
 
     for (int i = 0; i < board.elements_lg; i++)
     {
@@ -51,14 +56,14 @@ void drawBoard (Board board, bool redraw, decalaj decalajTabla)
 
             if(xCerc>board.xa and xCerc<board.xb and yCerc>board.ya and yCerc<board.yb)
             {
-                circle(xCerc, yCerc, board.elements[i].connectionPoints[j].r);
+                circle(xCerc, yCerc, board.elements[i].connectionPoints[j].r * zoomScale);
             }
 
             if (board.elements[i].connectionPoints[j].legatura != NULL)
             {
                 setlinestyle(1,0,3);
 
-                if (board.elements[i].connectionPoints[j].legatura -> start)
+                if (board.elements[i].connectionPoints[j].start)
                 {
                     int xCercTarget, yCercTarget;
                     obtineCoordEcran(board.elements[i].connectionPoints[j].legatura -> x, board.elements[i].connectionPoints[j].legatura -> y, xCercTarget, yCercTarget, decalajTabla, zoomScale);
@@ -72,6 +77,45 @@ void drawBoard (Board board, bool redraw, decalaj decalajTabla)
                 }
             }
         }
+    }
+}
+
+void updateConnectionPointRotation(boardElement &element)
+{
+    int aux = 1;
+
+    if (element.rotation % 2 == 0)
+    {
+        if (element.rotation == 2)
+        {
+            aux = -1;
+        }
+
+        element.width = 2;
+        element.height = 1;
+
+        element.connectionPoints[0].x = element.x + aux*2*laturaPatrat;
+        element.connectionPoints[0].y = element.y;
+
+        element.connectionPoints[1].x = element.x - aux*2*laturaPatrat;
+        element.connectionPoints[1].y = element.y;
+    }
+
+    if (element.rotation % 2 == 1)
+    {
+        if (element.rotation == 3)
+        {
+            aux = -1;
+        }
+
+        element.width = 1;
+        element.height = 2;
+
+        element.connectionPoints[0].x = element.x;
+        element.connectionPoints[0].y = element.y + aux*2*laturaPatrat;
+
+        element.connectionPoints[1].x = element.x;
+        element.connectionPoints[1].y = element.y - aux*2*laturaPatrat;
     }
 }
 
@@ -157,11 +201,11 @@ void addBoardPiesa (POINT P, Board &board, char elementRuta[100])
 
     board.elements[board.elements_lg].connectionPoints[0].x = P.x + 2*laturaPatrat;
     board.elements[board.elements_lg].connectionPoints[0].y = P.y;
-    board.elements[board.elements_lg].connectionPoints[0].r = 5*zoomScale;
+    board.elements[board.elements_lg].connectionPoints[0].r = 5;
 
     board.elements[board.elements_lg].connectionPoints[1].x = P.x - 2*laturaPatrat;
     board.elements[board.elements_lg].connectionPoints[1].y = P.y;
-    board.elements[board.elements_lg].connectionPoints[1].r = 5*zoomScale;
+    board.elements[board.elements_lg].connectionPoints[1].r = 5;
 
     strcpy(board.elements[board.elements_lg].source, elementRuta);
     board.elements_lg++;
