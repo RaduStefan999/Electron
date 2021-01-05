@@ -17,6 +17,12 @@ struct Mouse
     bool isDraging, justDropped;
 };
 
+struct Keyboard
+{
+    bool R_PRESS;
+    bool R_CONTINUOUS;
+};
+
 struct Collor
 {
     unsigned short int r, g, b;
@@ -47,6 +53,7 @@ void setButtons(Buttons *ButtonsList);
 bool contains (RectangleShape shape, Mouse mouse);
 void drawRectangle (RectangleShape shape);
 void mouseUpdate(Mouse *mouse);
+void keyboardUpdate(Keyboard *keyboard);
 
 #endif // UI_H
 

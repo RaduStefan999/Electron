@@ -14,6 +14,8 @@ using namespace std;
 
 Buttons ButtonsList;
 Mouse mouse;
+Keyboard keyboard;
+
 char elementRuta[100];
 Board board;
 int indexCurrentDraggingPiesa = -1;
@@ -129,6 +131,18 @@ void boardUpdate()
                     drawBoard(board, true, decalajTabla);
                 }
             }
+
+            if(keyboard.R_PRESS) // r= rotate part
+            {
+                int indexRotatePiesa = indexOcupiesSpace(board, cursorPosition, decalajTabla);
+
+                if (indexRotatePiesa != -1)
+                {
+                    board.elements[indexRotatePiesa].rotation = (board.elements[indexRotatePiesa].rotation + 1) % 4;
+                    drawBoard(board, true, decalajTabla);
+                }
+            }
+
         }
 
     }
@@ -147,6 +161,8 @@ void openApp()
 
     while(!GetAsyncKeyState(VK_ESCAPE)){
         mouseUpdate(&mouse);
+        keyboardUpdate(&keyboard);
+
         buttonsUpdate();
         boardUpdate();
     }

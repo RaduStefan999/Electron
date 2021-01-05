@@ -37,7 +37,7 @@ void drawBoard (Board board, bool redraw, decalaj decalajTabla)
 
         if(xEcran>board.xa and xEcran<board.xb and yEcran>board.ya and yEcran<board.yb)
         {
-            puneSimbol(f, P1);
+            puneSimbol(f, P1, board.elements[i].rotation);
         }
 
         for (int j = 0; j < board.elements[i].connectionPoints_nr; j++)
@@ -221,7 +221,7 @@ void obtinePunctUtil(POINT A, POINT &B, decalaj decalajTabla)
     B.y=yTabla1;
 }
 
-void puneSimbol(FILE *f, POINT c)
+void puneSimbol(FILE *f, POINT c, int rotation)
 {
     setlinestyle(0,0,3);
     /*
@@ -252,6 +252,9 @@ void puneSimbol(FILE *f, POINT c)
         if(lit=='l'){
             for(j=0;j<4;++j)
                 fscanf(f,"%f", &cf[j]);
+
+            rotatePoints(cf, rotation);
+
             line(c.x+laturaPatrat*zoomScale*cf[0] , c.y+laturaPatrat*zoomScale*cf[1] , c.x+laturaPatrat*zoomScale*cf[2] , c.y+laturaPatrat*zoomScale*cf[3] );
         }
         else if(lit=='a'){
@@ -269,5 +272,21 @@ void puneSimbol(FILE *f, POINT c)
                 fscanf(f,"%f", &cf[j]);
             ellipse(c.x+laturaPatrat*zoomScale*cf[0], c.y+laturaPatrat*zoomScale*cf[1],cf[2],cf[3],laturaPatrat*zoomScale*cf[4],laturaPatrat*zoomScale*cf[5]);
         }
+    }
+}
+
+void rotatePoints(float points[], int rotation)
+{
+    for (int i = 0; i < rotation; i++)
+    {
+        float aux = points[0];
+
+        points[0] = - points[1];
+        points[1] = aux;
+
+        aux = points[2];
+
+        points[2] = - points[3];
+        points[3] = aux;
     }
 }

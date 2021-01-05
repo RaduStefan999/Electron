@@ -22,7 +22,7 @@ void setButtons(Buttons *ButtonsList)
         POINT P;
         P.x = curentButton.shape.x + curentButton.shape.width/4;
         P.y = curentButton.shape.y + curentButton.shape.height/2;
-        puneSimbol(f,P);
+        puneSimbol(f,P,0);
 
         ifstream text (curentButton.elementRoute);
         char nume[100];
@@ -77,5 +77,22 @@ void mouseUpdate(Mouse *mouse)
     {
         mouse -> RMBClick = true;
         clearmouseclick(WM_RBUTTONDOWN);
+    }
+}
+
+void keyboardUpdate(Keyboard *keyboard)
+{
+    keyboard -> R_PRESS = false;
+
+    if(GetAsyncKeyState(0x52) && keyboard -> R_CONTINUOUS == false)
+    {
+        keyboard -> R_PRESS = true;
+    }
+
+    keyboard -> R_CONTINUOUS = false;
+
+    if(GetAsyncKeyState(0x52))
+    {
+        keyboard -> R_CONTINUOUS = true;
     }
 }

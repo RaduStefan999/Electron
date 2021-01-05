@@ -28,6 +28,7 @@ struct boardElement
     char source[100];
     int x, y, width, height;
     int connectionPoints_nr;
+    int rotation;
     connectionPoint connectionPoints[100];
 };
 
@@ -39,10 +40,11 @@ struct Board
 };
 
 
-void puneSimbol(FILE *f, POINT c);
+void puneSimbol(FILE *f, POINT c, int rotation);
 void addBoardPiesa (POINT P, Board &board, char elementRuta[100]);
 void modifyBoardPiesa (POINT P, Board &board, int indexCurrentDraggingPiesa);
 void removePiesa(Board &board, int indexEliminaPiesa);
+void rotatePoints(float points[], int rotation);
 
 void drawBoard (Board board, bool redraw, decalaj decalajTabla);
 void setPattern(Board board, decalaj decalajTabla);
