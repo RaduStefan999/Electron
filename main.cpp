@@ -175,7 +175,8 @@ void openApp()
         readimagefile ("UI/ElectronMeniu4x3.jpg", 0,0,xmax,ymax);
     }
 
-    while (GetAsyncKeyState(0x0D) == false){}
+    while (ismouseclick(WM_LBUTTONDOWN) == false) {}
+    clearmouseclick(WM_LBUTTONDOWN);
 
     drawBoard(board, false, decalajTabla, -1);
     setButtons(&ButtonsList, board);
