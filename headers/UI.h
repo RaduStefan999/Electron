@@ -10,6 +10,8 @@
 
 #include "board.h"
 
+struct Board;
+
 struct Mouse
 {
     int x, y;
@@ -49,7 +51,7 @@ struct Buttons
     int lg;
 };
 
-void setButtons(Buttons *ButtonsList);
+void setButtons(Buttons *ButtonsList, Board board);
 bool contains (RectangleShape shape, Mouse mouse);
 void drawRectangle (RectangleShape shape);
 void mouseUpdate(Mouse *mouse);

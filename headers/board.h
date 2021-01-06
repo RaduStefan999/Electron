@@ -25,7 +25,13 @@ struct connectionPoint
 
 struct boardElement
 {
-    char source[100];
+    char source[100], nume[100], continut_piesa[200];
+    short nr_marimi_fizice;
+    char marimeFizica[10];
+    char unitateMasura[10];
+    int valoare[10];
+    short indexMF;
+    bool display_continut,  modifica_continut;
     int x, y, width, height;
     int connectionPoints_nr;
     int rotation;
@@ -40,16 +46,20 @@ struct Board
 };
 
 
-void puneSimbol(FILE *f, POINT c, int rotation);
+void puneSimbol(FILE *f, POINT c, Board &board, int indexSimbol);
 void addBoardPiesa (POINT P, Board &board, char elementRuta[100]);
 void modifyBoardPiesa (POINT P, Board &board, int indexCurrentDraggingPiesa);
 void removePiesa(Board &board, int indexEliminaPiesa);
 void rotatePoints(float points[], int rotation);
 
-void drawBoard (Board board, bool redraw, decalaj decalajTabla);
+void drawBoard (Board &board, bool redraw, decalaj decalajTabla, int indexText);
 void setPattern(Board board, decalaj decalajTabla);
 void obtinePunctUtil(POINT A, POINT &B, decalaj decalajTabla);
 int indexOcupiesSpace(Board board, POINT P, decalaj decalajTabla);
 connectionPoint *getConnectionPoint(Board &board, POINT cursorPosition, decalaj decalajTabla);
+
+void displayContinutPiesa(Board &board, int indexPiesaSelectata, decalaj decalajTabla);
+void modificaContinutPiesa(Board &board,int indexPiesaSelectata, decalaj decalajTabla);
+void setMF_UM(Board &board, int indexPiesaSelectata);
 
 #endif // board_H

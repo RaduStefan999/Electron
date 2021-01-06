@@ -66,24 +66,24 @@ void boardUpdate()
             if (mouse.LMBClick)
             {
                 pan(mouse.x, mouse.y, decalajTabla);
-                drawBoard(board, true, decalajTabla);
+                drawBoard(board, true, decalajTabla, -1);
             }
 
             if(GetAsyncKeyState(0x49) && zoomScale<5)  // ctrl + i= zoom in
             {
                 zoomIn(zoomScale, decalajTabla);
-                drawBoard(board, true, decalajTabla);
+                drawBoard(board, true, decalajTabla, -1 );
             }
 
             if(GetAsyncKeyState(0x4F) && zoomScale>1) // ctrl + o= zoom out
             {
                 zoomOut(zoomScale, decalajTabla);
-                drawBoard(board, true, decalajTabla);
+                drawBoard(board, true, decalajTabla, -1);
             }
             if(GetAsyncKeyState(0x52)) // ctrl + r= reset zoom
             {
                 resetPanAndZoom(decalajTabla, zoomScale);
-                drawBoard(board, true, decalajTabla);
+                drawBoard(board, true, decalajTabla, -1);
             }
         }
         else
@@ -97,7 +97,7 @@ void boardUpdate()
                 if (indexCurrentDraggingPiesa == -1 && firstPoint == NULL && strlen(elementRuta) != 0 && buttonPressed)
                 {
                     addBoardPiesa(P, board, elementRuta);
-                    drawBoard(board, true, decalajTabla);
+                    drawBoard(board, true, decalajTabla, -1);
                     buttonPressed=false;
                 }
             }
@@ -106,7 +106,7 @@ void boardUpdate()
                 if (indexCurrentDraggingPiesa != -1 && (indexOcupiesSpace(board, cursorPosition, decalajTabla) == -1 || indexOcupiesSpace(board, cursorPosition, decalajTabla)==indexCurrentDraggingPiesa))
                 {
                     modifyBoardPiesa(P, board, indexCurrentDraggingPiesa);
-                    drawBoard(board, true, decalajTabla);
+                    drawBoard(board, true, decalajTabla, -1 );
                 }
                 else
                 {
@@ -117,7 +117,7 @@ void boardUpdate()
                         firstPoint -> start = 1;
                         lastPoint -> legatura = firstPoint;
 
-                        drawBoard(board, true, decalajTabla);
+                        drawBoard(board, true, decalajTabla, -1);
                     }
                 }
             }
@@ -128,7 +128,7 @@ void boardUpdate()
                 if (indexEliminaPiesa != -1)
                 {
                     removePiesa(board, indexEliminaPiesa);
-                    drawBoard(board, true, decalajTabla);
+                    drawBoard(board, true, decalajTabla, -1);
                 }
             }
 
@@ -139,7 +139,16 @@ void boardUpdate()
                 if (indexRotatePiesa != -1)
                 {
                     board.elements[indexRotatePiesa].rotation = (board.elements[indexRotatePiesa].rotation + 1) % 4;
-                    drawBoard(board, true, decalajTabla);
+                    drawBoard(board, true, decalajTabla, -1);
+                }
+            }
+            if(ismouseclick(WM_LBUTTONDBLCLK)){
+                clearmouseclick(WM_LBUTTONDBLCLK);
+                int indexPiesaSelectata = indexOcupiesSpace(board, cursorPosition, decalajTabla);
+                if(indexPiesaSelectata !=-1){
+                        board.elements[indexPiesaSelectata].display_continut=true;
+                        drawBoard(board, true, decalajTabla, indexPiesaSelectata);
+
                 }
             }
 
@@ -156,8 +165,9 @@ void openApp()
     board.xa = 400; board.ya = 40; board.xb = board.xa + 1000; board.yb = board.ya+ 800;
 
     initwindow(xmax, ymax, "");
-    drawBoard(board, false, decalajTabla);
-    setButtons(&ButtonsList);
+    drawBoard(board, false, decalajTabla, -1);
+    setButtons(&ButtonsList, board);
+    cout<<'\n';
 
     while(!GetAsyncKeyState(VK_ESCAPE)){
         mouseUpdate(&mouse);
