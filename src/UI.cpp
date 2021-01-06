@@ -2,7 +2,8 @@
 
 using namespace std;
 
-void setButtons(Buttons *ButtonsList)
+
+void setButtons(Buttons *ButtonsList, Board board)
 {
     int n;
     ifstream fin ("UI/buttons.txt");
@@ -22,7 +23,8 @@ void setButtons(Buttons *ButtonsList)
         POINT P;
         P.x = curentButton.shape.x + curentButton.shape.width/4;
         P.y = curentButton.shape.y + curentButton.shape.height/2;
-        puneSimbol(f,P,0);
+
+        puneSimbol(f,P,board,-1);
 
         ifstream text (curentButton.elementRoute);
         char nume[100];

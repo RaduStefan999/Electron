@@ -3,7 +3,7 @@
 using namespace std;
 
 
-void drawBoard (Board &board, bool redraw, decalaj decalajTabla)
+void drawBoard (Board &board, bool redraw, decalaj decalajTabla, int indexPiesaSelectata)
 {
     if (!redraw)
     {
@@ -42,7 +42,8 @@ void drawBoard (Board &board, bool redraw, decalaj decalajTabla)
 
         if(xEcran>board.xa and xEcran<board.xb and yEcran>board.ya and yEcran<board.yb)
         {
-            puneSimbol(f, P1, board.elements[i].rotation);
+            puneSimbol(f, P1, board, i);
+            cout<<board.elements[i].indexMF<<' ';
         }
 
         for (int j = 0; j < board.elements[i].connectionPoints_nr; j++)
@@ -77,6 +78,14 @@ void drawBoard (Board &board, bool redraw, decalaj decalajTabla)
                 }
             }
         }
+    }
+    if(indexPiesaSelectata!=-1)
+    {
+        if(board.elements[indexPiesaSelectata].display_continut==true)
+            displayContinutPiesa(board, indexPiesaSelectata, decalajTabla);
+        else
+            if(board.elements[indexPiesaSelectata].modifica_continut==true)
+                modificaContinutPiesa(board, indexPiesaSelectata, decalajTabla);
     }
 }
 
@@ -265,7 +274,7 @@ void obtinePunctUtil(POINT A, POINT &B, decalaj decalajTabla)
     B.y=yTabla1;
 }
 
-void puneSimbol(FILE *f, POINT c, int rotation)
+void puneSimbol(FILE *f, POINT c, Board &board, int i)
 {
     setlinestyle(0,0,3);
     /*
@@ -274,16 +283,26 @@ void puneSimbol(FILE *f, POINT c, int rotation)
     //cout<<linfo.thickness; */
 
     char text[20];
-    fgets(text,20,f);
-    text[0]=NULL; //nu avem nevoie de text, doar sarim peste el
-    int nrNoduri,i=1;
+    fgets(text,100,f);
+    if(i!=-1)
+    {
+        strcpy(board.elements[i].nume, text);
+        setMF_UM(board, i);
+    }
+
+
+    int nrNoduri,j=0;
     fscanf(f, "%d", &nrNoduri);
-    while(i<=nrNoduri){
-        POINT nod;
+    board.elements[i].connectionPoints_nr = nrNoduri;
+    while(j<nrNoduri){
+        /*POINT nod;
         fscanf(f, "%f", &nod.x);
+        board.elements[i].connectionPoints[i].x = board.elements[i].x + nod.x*laturaPatrat;
         fscanf(f, "%f", &nod.y);
-        //asociazaNod(nod);
-        i++;
+        board.elements[i].connectionPoints[i].y = board.elements[i].y + nod.y*laturaPatrat;
+        board.elements[i].connectionPoints[i].r= 5*zoomScale;
+        //asociazaNod(nod); */
+        j++;
     }
     fseek(f,2,SEEK_CUR);
     fgets(text,20,f);
@@ -293,11 +312,14 @@ void puneSimbol(FILE *f, POINT c, int rotation)
         char lit; int j;
         float cf[6];
         fscanf(f,"%c", &lit);
+
+        if(i==-1)
+            board.elements[i].rotation=0;
         if(lit=='l'){
             for(j=0;j<4;++j)
                 fscanf(f,"%f", &cf[j]);
 
-            rotatePoints(cf, rotation);
+            rotatePoints(cf, board.elements[i].rotation);
 
             line(c.x+laturaPatrat*zoomScale*cf[0] , c.y+laturaPatrat*zoomScale*cf[1] , c.x+laturaPatrat*zoomScale*cf[2] , c.y+laturaPatrat*zoomScale*cf[3] );
         }
@@ -317,6 +339,154 @@ void puneSimbol(FILE *f, POINT c, int rotation)
             ellipse(c.x+laturaPatrat*zoomScale*cf[0], c.y+laturaPatrat*zoomScale*cf[1],cf[2],cf[3],laturaPatrat*zoomScale*cf[4],laturaPatrat*zoomScale*cf[5]);
         }
     }
+}
+
+void setMF_UM(Board &board, int i)
+{
+    if( strstr(board.elements[i].nume, "Condensator")){
+        board.elements[i].nr_marimi_fizice=1;
+        board.elements[i].marimeFizica[0]='C';
+
+        board.elements[i].unitateMasura[0]='F';
+    }
+    else if(strstr(board.elements[i].nume, "Dioda")){
+            board.elements[i].nr_marimi_fizice=4;
+            board.elements[i].marimeFizica[0]='I';
+            board.elements[i].marimeFizica[1]='R';
+            board.elements[i].marimeFizica[2]='C';
+            board.elements[i].marimeFizica[3]='U';
+
+            board.elements[i].unitateMasura[0]='A';
+            board.elements[i].unitateMasura[1]=213;  //omega
+            board.elements[i].unitateMasura[2]='F';
+            board.elements[i].unitateMasura[3]='V';
+        }
+        else if(strstr(board.elements[i].nume, "Dioda Zenner")){
+                board.elements[i].nr_marimi_fizice=2;
+                board.elements[i].marimeFizica[0]='U';
+                board.elements[i].marimeFizica[1]='R';
+
+                board.elements[i].unitateMasura[0]='V';
+                board.elements[i].unitateMasura[1]=213;
+        }
+        else if(strstr(board.elements[i].nume, "Generator")){
+            board.elements[i].nr_marimi_fizice=1;
+            board.elements[i].marimeFizica[0]='I';
+
+            board.elements[i].unitateMasura[0]='A';
+        }
+        else if(strstr(board.elements[i].nume, "Inductor")){
+            board.elements[i].nr_marimi_fizice=1;
+            board.elements[i].marimeFizica[0]='U';
+
+            board.elements[i].unitateMasura[0]='V';
+        }
+        else if(strstr(board.elements[i].nume, "Rezistor")){
+            board.elements[i].nr_marimi_fizice=1;
+            board.elements[i].marimeFizica[0]='R';
+
+            board.elements[i].unitateMasura[0]=213;
+        }
+        else if(strstr(board.elements[i].nume, "Sursa AC")){
+            board.elements[i].nr_marimi_fizice=1;
+            board.elements[i].marimeFizica[0]='U';
+
+            board.elements[i].unitateMasura[0]='V';
+        }
+        else if(strstr(board.elements[i].nume, "Sursa de tensiune")){
+            board.elements[i].nr_marimi_fizice=1;
+            board.elements[i].marimeFizica[0]='U';
+            board.elements[i].unitateMasura[0]='V';
+        }
+
+}
+
+
+void displayContinutPiesa(Board &board, int i, decalaj decalajTabla)
+{
+    char text[50], s[50], s1[50], t[2], tasta, text2[50], sufix[3];
+    int xEcran,yEcran;
+    obtineCoordEcran(board.elements[i].connectionPoints[1].x,board.elements[i].connectionPoints[1].y+laturaPatrat, xEcran, yEcran, decalajTabla, zoomScale);
+
+    text[0]=board.elements[i].marimeFizica[board.elements[i].indexMF] ;
+    text[1]= '=';
+    text[2]= '\0';
+
+    itoa(board.elements[i].valoare[board.elements[i].indexMF], s, 10);
+
+    sufix[0]=' ';
+    sufix[1]= board.elements[i].unitateMasura[board.elements[i].indexMF];
+    sufix[2]= '\0';
+
+    t[0]=tasta; t[1]='\0';
+    strcat(s,t);
+    strcpy(s1,s); strcat(s1,sufix);
+    setcolor(RED);
+    strcpy(text2,text);
+    strcat(text2,s1);
+    outtextxy(xEcran, yEcran, text2);
+
+    tasta=getch();
+    if(tasta==13){  //enter
+        board.elements[i].display_continut=false;
+        board.elements[i].modifica_continut=true;
+        drawBoard(board, true, decalajTabla, i);
+    }
+    else if(tasta==32){  //space
+        board.elements[i].display_continut=false;
+        board.elements[i].modifica_continut=false;
+        drawBoard(board, true, decalajTabla,-1);
+    }
+    else if(tasta==39){  // ssageata dreapta
+        board.elements[i].indexMF= (board.elements[i].indexMF + 1)% board.elements[i].nr_marimi_fizice;
+
+        drawBoard(board, true, decalajTabla, i);
+    }
+    else if(tasta==37){ //sageata stanga
+        board.elements[i].indexMF= (board.elements[i].indexMF - 1)% board.elements[i].nr_marimi_fizice;
+        board.elements[i].display_continut=true;
+        board.elements[i].modifica_continut=false;
+        drawBoard(board, true, decalajTabla, i);
+    }
+
+}
+
+void modificaContinutPiesa(Board &board, int i, decalaj decalajTabla)
+{
+    char text[50], s[50], s1[50], t[2], tasta, text2[50];
+    int xEcran,yEcran;
+    obtineCoordEcran(board.elements[i].connectionPoints[1].x,board.elements[i].connectionPoints[1].y+laturaPatrat, xEcran, yEcran, decalajTabla, zoomScale);
+
+    text[0]=board.elements[i].marimeFizica[board.elements[i].indexMF] ;
+    text[1]= '=';
+    text[2]= '\0';
+
+    strcpy(s,"");
+    t[0]=tasta; t[1]='\0';
+    strcat(s,t);
+    strcpy(s1,s); strcat(s1,"_");
+    setcolor(RED);
+    strcpy(text2,text);
+    strcat(text2,s1);
+    outtextxy(xEcran,yEcran,text2);
+    do {
+        tasta=getch();
+        if(tasta>=48 && tasta<=57)
+        {
+            t[0]=tasta; t[1]='\0';
+            strcat(s,t);
+            strcpy(s1,s); strcat(s1,"_");
+            setcolor(RED);
+            strcpy(text2,text);
+            strcat(text2,s1);
+            outtextxy(xEcran,yEcran,text2);
+        }
+    } while (tasta!=13);
+    board.elements[i].valoare[board.elements[i].indexMF]=atoi(s);
+    board.elements[i].modifica_continut=false;
+    board.elements[i].display_continut=true;
+    drawBoard(board, true, decalajTabla, i);
+
 }
 
 void rotatePoints(float points[], int rotation)
