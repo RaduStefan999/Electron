@@ -165,6 +165,18 @@ void openApp()
     board.xa = 400; board.ya = 40; board.xb = board.xa + 1000; board.yb = board.ya+ 800;
 
     initwindow(xmax, ymax, "");
+
+    if ((float)xmax/ymax > 1.4)
+    {
+        readimagefile ("UI/ElectronMeniu16x9.jpg", 0,0,xmax,ymax);
+    }
+    else
+    {
+        readimagefile ("UI/ElectronMeniu4x3.jpg", 0,0,xmax,ymax);
+    }
+
+    while (GetAsyncKeyState(0x0D) == false){}
+
     drawBoard(board, false, decalajTabla, -1);
     setButtons(&ButtonsList, board);
     cout<<'\n';
