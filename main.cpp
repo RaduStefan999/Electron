@@ -85,7 +85,9 @@ void boardUpdate()
                 resetPanAndZoom(decalajTabla, zoomScale);
                 drawBoard(board, true, decalajTabla, -1);
             }
+
         }
+
         else
         {
             if(mouse.LMBClick)
@@ -103,7 +105,7 @@ void boardUpdate()
             }
             if (mouse.justDropped)
             {
-                if (indexCurrentDraggingPiesa != -1 && (indexOcupiesSpace(board, cursorPosition, decalajTabla) == -1 || indexOcupiesSpace(board, cursorPosition, decalajTabla)==indexCurrentDraggingPiesa))
+                if (indexCurrentDraggingPiesa != -1 && ( indexOcupiesSpace(board, cursorPosition, decalajTabla) == -1 || indexOcupiesSpace(board, cursorPosition, decalajTabla)==indexCurrentDraggingPiesa))
                 {
                     modifyBoardPiesa(P, board, indexCurrentDraggingPiesa);
                     drawBoard(board, true, decalajTabla, -1 );
@@ -155,6 +157,16 @@ void boardUpdate()
         }
 
     }
+    if(mouse.LMBClick and mouse.x>board.xb){
+                board.dialogBox.afis=true;
+                board.dialogBox.mod=1; //mod 1= salvare
+                drawBoard(board,true,decalajTabla,-1);
+            }
+    if(mouse.RMBClick and mouse.x>board.xb){
+                board.dialogBox.afis=true;
+                board.dialogBox.mod=2; //mod 1= salvare
+                drawBoard(board,true,decalajTabla,-1);
+            }
 }
 
 void openApp()

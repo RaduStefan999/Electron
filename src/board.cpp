@@ -27,7 +27,7 @@ void drawBoard (Board &board, bool redraw, decalaj decalajTabla, int indexPiesaS
         FILE *f;
         POINT P, P1;
 
-        if ((f = fopen(board.elements[i].source,"r")) == NULL){
+       if ((f = fopen(board.elements[i].source,"r")) == NULL){
             printf("Error! opening file");
             exit(1);
         }
@@ -43,7 +43,7 @@ void drawBoard (Board &board, bool redraw, decalaj decalajTabla, int indexPiesaS
         if(xEcran>board.xa and xEcran<board.xb and yEcran>board.ya and yEcran<board.yb)
         {
             puneSimbol(f, P1, board, i);
-            cout<<board.elements[i].indexMF<<' ';
+            //cout<<board.elements[i].indexMF<<' ';
         }
 
         for (int j = 0; j < board.elements[i].connectionPoints_nr; j++)
@@ -87,6 +87,9 @@ void drawBoard (Board &board, bool redraw, decalaj decalajTabla, int indexPiesaS
             if(board.elements[indexPiesaSelectata].modifica_continut==true)
                 modificaContinutPiesa(board, indexPiesaSelectata, decalajTabla);
     }
+
+    if(board.dialogBox.afis==1)
+        openDialogBox(board, decalajTabla);
 }
 
 void updateConnectionPointRotation(boardElement &element)

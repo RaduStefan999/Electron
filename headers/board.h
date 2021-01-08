@@ -15,35 +15,44 @@
 extern int laturaPatrat;
 
 struct decalaj;
+struct dialog;
 
 struct connectionPoint
 {
-    int x, y, r;
-    bool start;
+    int x, y, r; //
+    bool start; //
     connectionPoint *legatura;
 };
 
 struct boardElement
 {
-    char source[100], nume[100], continut_piesa[200];
-    short nr_marimi_fizice;
-    char marimeFizica[10];
-    char unitateMasura[10];
-    int valoare[10];
-    short indexMF;
-    bool display_continut,  modifica_continut;
-    int x, y, width, height;
-    int connectionPoints_nr;
-    int rotation;
+    char source[100], nume[100]; // //continut_piesa[200];
+    int rotation; //
+    short nr_marimi_fizice; //
+    char marimeFizica[10];//
+    char unitateMasura[10];//
+    int valoare[10]; //
+    short indexMF; //
+    bool display_continut,  modifica_continut; //
+    int x, y, width, height;  //
+    int connectionPoints_nr;  //
     connectionPoint connectionPoints[100];
+};
+
+struct dialog
+{
+    bool afis;
+    int mod;
 };
 
 struct Board
 {
     int xa, ya, xb, yb;
-    int elements_lg;
+    int elements_lg;  //
+    dialog dialogBox;
     boardElement elements[100];
 };
+
 
 
 void puneSimbol(FILE *f, POINT c, Board &board, int indexSimbol);
