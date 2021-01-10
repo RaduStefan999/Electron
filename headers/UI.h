@@ -12,6 +12,8 @@
 
 struct Board;
 
+struct decalaj;
+
 struct Mouse
 {
     int x, y;
@@ -51,11 +53,17 @@ struct Buttons
     int lg;
 };
 
+
+
 void setButtons(Buttons *ButtonsList, Board board);
 bool contains (RectangleShape shape, Mouse mouse);
 void drawRectangle (RectangleShape shape);
 void mouseUpdate(Mouse *mouse);
 void keyboardUpdate(Keyboard *keyboard);
+
+void openDialogBox(Board &board, decalaj decalajTabla);
+void salvareCircuit(Board boardn, char nume[]);
+void incarcareCircuit(Board &board, char nume[], decalaj decalajTabla);
 
 #endif // UI_H
 
