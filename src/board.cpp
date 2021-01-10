@@ -40,7 +40,7 @@ void drawBoard (Board &board, bool redraw, decalaj decalajTabla, int indexPiesaS
         obtineCoordEcran(P.x, P.y, xEcran, yEcran, decalajTabla, zoomScale);
         P1.x=xEcran; P1.y=yEcran;
 
-        if(xEcran>board.xa and xEcran<board.xb and yEcran>board.ya and yEcran<board.yb)
+        if((xEcran - board.elements[i].width*laturaPatrat*zoomScale > board.xa) and (xEcran + board.elements[i].width*laturaPatrat*zoomScale < board.xb) and (yEcran - board.elements[i].height*laturaPatrat*zoomScale > board.ya) and (yEcran + board.elements[i].height*laturaPatrat*zoomScale < board.yb))
         {
             puneSimbol(f, P1, board, i);
             cout<<board.elements[i].indexMF<<' ';
@@ -55,7 +55,7 @@ void drawBoard (Board &board, bool redraw, decalaj decalajTabla, int indexPiesaS
 
             obtineCoordEcran(board.elements[i].connectionPoints[j].x, board.elements[i].connectionPoints[j].y, xCerc, yCerc, decalajTabla, zoomScale);
 
-            if(xCerc>board.xa and xCerc<board.xb and yCerc>board.ya and yCerc<board.yb)
+            if((xCerc - board.elements[i].connectionPoints[j].r*zoomScale > board.xa) and (xCerc + board.elements[i].connectionPoints[j].r*zoomScale < board.xb) and (yCerc - board.elements[i].connectionPoints[j].r*zoomScale > board.ya) and (yCerc + board.elements[i].connectionPoints[j].r*zoomScale < board.yb))
             {
                 circle(xCerc, yCerc, board.elements[i].connectionPoints[j].r * zoomScale);
             }
