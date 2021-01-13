@@ -1,4 +1,4 @@
-Sursa AC
+SursaAC
 2
 -2 0
 2 0

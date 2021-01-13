@@ -131,7 +131,7 @@ void salvareCircuit(Board board, char nume[])
             fprintf(f, "%c %c\n", board.elements[i].marimeFizica[j], board.elements[i].unitateMasura[j] /*, board.elements[i].valoare[j] );
             */
         fprintf(f, "%d\n", board.elements[i].indexMF);
-        fprintf(f, "%d %d\n", board.elements[i].display_continut, board.elements[i].modifica_continut);
+        /*fprintf(f, "%d %d\n", board.elements[i].display_continut, board.elements[i].modifica_continut);*/
 
         fprintf(f, "%s\n", board.elements[i].source);
         fprintf(f, "%s\n", board.elements[i].nume);
@@ -151,21 +151,25 @@ void incarcareCircuit(Board &board, char nume[], decalaj decalajTabla)
 
     FILE *f;
     if ((f = fopen(source ,"r")) == NULL){
-        printf("Error! opening file");
+        printf("Error! opening file2");
         exit(1);
     }
 
     fscanf(f, "%d", &board.elements_lg);
+   // cout<<board.elements_lg<<'\n';
 
     for(i=0; i<board.elements_lg; i++)
     {
         fscanf(f, "%d", &board.elements[i].x);
         fscanf(f, "%d", &board.elements[i].y);
+       // cout<<board.elements[i].x<<' '<<board.elements[i].y<<'\n';
 
         fscanf(f, "%d", &board.elements[i].width);
         fscanf(f, "%d", &board.elements[i].height);
+        //cout<<board.elements[i].width<<' '<<board.elements[i].height<<'\n';
 
         fscanf(f, "%d", &board.elements[i].connectionPoints_nr);
+       // cout<<board.elements[i].connectionPoints_nr<<'\n';
 
         for(j=0;j<board.elements[i].connectionPoints_nr; j++){
             fscanf(f, "%d", &board.elements[i].connectionPoints[j].x);
@@ -173,10 +177,11 @@ void incarcareCircuit(Board &board, char nume[], decalaj decalajTabla)
             fscanf(f, "%d", &board.elements[i].connectionPoints[j].r);
             fscanf(f, "%d", &board.elements[i].connectionPoints[j].start);
             fscanf(f, "%p", &board.elements[i].connectionPoints[j].legatura);
+           // cout<<board.elements[i].connectionPoints[j].x<<' '<<board.elements[i].connectionPoints[j].y<<' '<<board.elements[i].connectionPoints[j].r<<' '<<board.elements[i].connectionPoints[j].start<<' '<<board.elements[i].connectionPoints[j].legatura<<'\n';
         }
 
         fscanf(f, "%d", &board.elements[i].rotation);
-
+      //  cout<<board.elements[i].rotation<<'\n';
         /*
         fscanf(f, "%d", &board.elements[i].nr_marimi_fizice);
         cout<<board.elements[i].nr_marimi_fizice<<'\n';
@@ -190,13 +195,18 @@ void incarcareCircuit(Board &board, char nume[], decalaj decalajTabla)
         */
 
         fscanf(f, "%d", &board.elements[i].indexMF);
-
+        //cout<<board.elements[i].indexMF<<'\n';
+        cout<<board.elements[i].x<<'\n';
+    /*
         fscanf(f, "%d", &board.elements[i].display_continut);
         fscanf(f, "%d", &board.elements[i].modifica_continut);
-
+        // cout<<board.elements[i].display_continut<<' '<<board.elements[i].modifica_continut<<'\n';
+    */
         fscanf(f, "%s", &board.elements[i].source);
+       // cout<<board.elements[i].source<<'\n';
 
         fscanf(f, "%s", &board.elements[i].nume);
+        //cout<<board.elements[i].nume<<'\n';
     }
     fclose(f);
     board.dialogBox.afis=false;
@@ -213,6 +223,7 @@ void openDialogBox(Board &board, decalaj decalajTabla)
     y=(board.yb+board.ya)/2-l/2;
     y1=(board.yb+board.ya)/2+l/2;
 
+    setcolor(RGB(192,192,192));
     bar(x,y,x1,y1);
     setcolor(RED);
     setlinestyle(0,0,5);
@@ -246,8 +257,10 @@ void openDialogBox(Board &board, decalaj decalajTabla)
     nume[strlen(nume)-1]=NULL;
     if(board.dialogBox.mod==1)
         salvareCircuit(board, nume);
-    else
+    else{
         incarcareCircuit(board, nume, decalajTabla);
+        cout<<board.elements[0].height;
+    }
     board.dialogBox.afis=false;
     drawBoard(board,true,decalajTabla,-1);
 

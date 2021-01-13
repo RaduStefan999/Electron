@@ -28,7 +28,7 @@ void drawBoard (Board &board, bool redraw, decalaj decalajTabla, int indexPiesaS
         POINT P, P1;
 
        if ((f = fopen(board.elements[i].source,"r")) == NULL){
-            printf("Error! opening file");
+            printf("Error! opening file1");
             exit(1);
         }
 
@@ -364,7 +364,7 @@ void setMF_UM(Board &board, int i)
             board.elements[i].unitateMasura[2]='F';
             board.elements[i].unitateMasura[3]='V';
         }
-        else if(strstr(board.elements[i].nume, "Dioda Zenner")){
+        else if(strstr(board.elements[i].nume, "DiodaZenner")){
                 board.elements[i].nr_marimi_fizice=2;
                 board.elements[i].marimeFizica[0]='U';
                 board.elements[i].marimeFizica[1]='R';
@@ -390,13 +390,13 @@ void setMF_UM(Board &board, int i)
 
             board.elements[i].unitateMasura[0]=213;
         }
-        else if(strstr(board.elements[i].nume, "Sursa AC")){
+        else if(strstr(board.elements[i].nume, "SursaAC")){
             board.elements[i].nr_marimi_fizice=1;
             board.elements[i].marimeFizica[0]='U';
 
             board.elements[i].unitateMasura[0]='V';
         }
-        else if(strstr(board.elements[i].nume, "Sursa de tensiune")){
+        else if(strstr(board.elements[i].nume, "SursaTensiune")){
             board.elements[i].nr_marimi_fizice=1;
             board.elements[i].marimeFizica[0]='U';
             board.elements[i].unitateMasura[0]='V';

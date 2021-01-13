@@ -36,7 +36,7 @@ struct boardElement
     bool display_continut,  modifica_continut; //
     int x, y, width, height;  //
     int connectionPoints_nr;  //
-    connectionPoint connectionPoints[100];
+    connectionPoint connectionPoints[5];
 };
 
 struct dialog

@@ -1,4 +1,4 @@
-Dioda Zenner
+DiodaZenner
 2
 -1.5 0
 1.5 0

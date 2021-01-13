@@ -171,6 +171,7 @@ void boardUpdate()
 
 void openApp()
 {
+
     int xmax=GetSystemMetrics(SM_CXSCREEN);
     int ymax=GetSystemMetrics(SM_CYSCREEN);
 
@@ -192,7 +193,6 @@ void openApp()
 
     drawBoard(board, false, decalajTabla, -1);
     setButtons(&ButtonsList, board);
-    cout<<'\n';
 
     while(!GetAsyncKeyState(VK_ESCAPE)){
         mouseUpdate(&mouse);

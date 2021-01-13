@@ -1,0 +1,21 @@
+2
+840 380
+2 1
+2
+880 380 5 0 00000000
+800 380 5 0 004AA8DC
+0
+0
+elemente\generator.txt
+Generator
+
+700 600
+1 2
+2
+700 640 5 0 00000000
+700 560 5 1 004AA754
+1
+0
+elemente\rezistor.txt
+Rezistor
+
