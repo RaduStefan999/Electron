@@ -339,6 +339,7 @@ void puneSimbol(FILE *f, POINT c, Board &board, int i)
         else if(lit=='e'){
             for(j=0;j<6;++j)
                 fscanf(f,"%f", &cf[j]);
+            rotateAngles(cf, board.elements[i].rotation);
             ellipse(c.x+laturaPatrat*zoomScale*cf[0], c.y+laturaPatrat*zoomScale*cf[1],cf[2],cf[3],laturaPatrat*zoomScale*cf[4],laturaPatrat*zoomScale*cf[5]);
         }
     }
@@ -506,4 +507,25 @@ void rotatePoints(float points[], int rotation)
         points[2] = - points[3];
         points[3] = aux;
     }
+}
+
+void rotateAngles(float angles[], int rotation)
+{
+    angles[2]+=90*rotation;
+    angles[3]+=90*rotation;
+
+
+    for (int i = 0; i < rotation; i++)
+    {
+        float aux = angles[0];
+
+        angles[0] = - angles[1];
+        angles[1] = aux;
+    }
+    if(rotation==1 or rotation==3)
+        swap(angles[4], angles[5]);
+    if(rotation==1)
+        angles[0]+=0.25;
+    if(rotation==3)
+        angles[0]-=0.25;
 }

@@ -64,6 +64,7 @@ void modifyBoardPiesa (POINT P, Board &board, int indexCurrentDraggingPiesa);
 void removePiesa(Board &board, int indexEliminaPiesa);
 //Radu
 void rotatePoints(float points[], int rotation);
+void rotateAngles(float angles[], int rotation);
 //Radu
 void updateConnectionPointRotation(boardElement &element);
 //Amandoi
