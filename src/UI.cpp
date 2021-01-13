@@ -256,6 +256,8 @@ void incarcareCircuit(Board &board, char nume[], decalaj decalajTabla)
 
 void openDialogBox(Board &board, decalaj decalajTabla)
 {
+    fflush(stdin);
+
     int x,y,x1,y1,L,l;
     L=(board.xb-board.xa)/4;
     l=(board.yb-board.ya)/11;
@@ -284,6 +286,9 @@ void openDialogBox(Board &board, decalaj decalajTabla)
     t[0]=tasta; t[1]='\0';
     strcat(s,t);
     strcpy(nume,s); strcat(nume,"_");
+
+    flushBuffer();
+
     do {
         tasta=getch();
         if(isalnum(tasta))
@@ -306,4 +311,9 @@ void openDialogBox(Board &board, decalaj decalajTabla)
     drawBoard(board,true,decalajTabla,-1);
 
 
+}
+
+void flushBuffer ()
+{
+    while ((kbhit())) getch();
 }

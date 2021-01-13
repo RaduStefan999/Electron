@@ -27,7 +27,7 @@
 	"headers/board.h"
 	"headers/zoomandpan.h"
 
-1610556894 c:\users\raducu999\documents\proiecte facultate\electron\headers\ui.h
+1610569180 c:\users\raducu999\documents\proiecte facultate\electron\headers\ui.h
 	<fstream>
 	<winbgim.h>
 	<graphics.h>
@@ -50,7 +50,7 @@
 1610558353 source:c:\users\raducu999\documents\proiecte facultate\electron\src\board.cpp
 	"../headers/board.h"
 
-1610557543 source:c:\users\raducu999\documents\proiecte facultate\electron\src\ui.cpp
+1610569146 source:c:\users\raducu999\documents\proiecte facultate\electron\src\ui.cpp
 	"../headers/UI.h"
 
 1610554488 source:c:\users\iulian\electron\main.cpp

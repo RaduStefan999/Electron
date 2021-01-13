@@ -86,6 +86,8 @@ void openDialogBox(Board &board, decalaj decalajTabla);
 void salvareCircuit(Board boardn, char nume[]);
 //Iulian
 void incarcareCircuit(Board &board, char nume[], decalaj decalajTabla);
+//Radu
+void flushBuffer();
 
 #endif // UI_H
 
