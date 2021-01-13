@@ -51,12 +51,12 @@ void openApp()
     if ((float)xmax/ymax > 1.4)
     {
         readimagefile ("UI/ElectronMeniu16x9.jpg", 0,0,xmax,ymax);
-        board.xa = 400; board.ya = 40; board.xb = board.xa + 1150; board.yb = board.ya+ 920;
+        board.xa = 400; board.ya = 40; board.xb = board.xa + (xmax*0.6); board.yb = board.ya + (ymax*0.82);
     }
     else
     {
         readimagefile ("UI/ElectronMeniu4x3.jpg", 0,0,xmax,ymax);
-        board.xa = 400; board.ya = 40; board.xb = board.xa + 1000; board.yb = board.ya+ 800;
+        board.xa = 400; board.ya = 40; board.xb = board.xa + (xmax*0.6); board.yb = board.ya + (ymax*0.82);
     }
 
     while (ismouseclick(WM_LBUTTONDOWN) == false) {}
@@ -132,8 +132,11 @@ void boardUpdate()
             {
                 if (indexCurrentDraggingPiesa != -1 && ( indexOcupiesSpace(board, cursorPosition, decalajTabla) == -1 || indexOcupiesSpace(board, cursorPosition, decalajTabla)==indexCurrentDraggingPiesa))
                 {
-                    modifyBoardPiesa(P, board, indexCurrentDraggingPiesa);
-                    drawBoard(board, true, decalajTabla, -1 );
+                    if (keyboard.M_CONTINUOUS)
+                    {
+                        modifyBoardPiesa(P, board, indexCurrentDraggingPiesa);
+                        drawBoard(board, true, decalajTabla, -1 );
+                    }
                 }
                 else
                 {

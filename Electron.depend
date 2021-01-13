@@ -14,7 +14,7 @@
 	<iostream>
 	<windows.h>
 
-1610549660 source:c:\users\raducu999\documents\proiecte facultate\electron\main.cpp
+1610552439 source:c:\users\raducu999\documents\proiecte facultate\electron\main.cpp
 	<iostream>
 	<winbgim.h>
 	<graphics.h>
@@ -26,7 +26,7 @@
 	"headers/board.h"
 	"headers/zoomandpan.h"
 
-1610551194 c:\users\raducu999\documents\proiecte facultate\electron\headers\ui.h
+1610551761 c:\users\raducu999\documents\proiecte facultate\electron\headers\ui.h
 	<fstream>
 	<winbgim.h>
 	<graphics.h>
@@ -49,7 +49,7 @@
 1610547353 source:c:\users\raducu999\documents\proiecte facultate\electron\src\board.cpp
 	"../headers/board.h"
 
-1610548615 source:c:\users\raducu999\documents\proiecte facultate\electron\src\ui.cpp
+1610552322 source:c:\users\raducu999\documents\proiecte facultate\electron\src\ui.cpp
 	"../headers/UI.h"
 
 1610543356 source:c:\users\iulian\electron\main.cpp

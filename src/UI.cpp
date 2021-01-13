@@ -98,10 +98,16 @@ void keyboardUpdate(Keyboard *keyboard)
     }
 
     keyboard -> R_CONTINUOUS = false;
+    keyboard -> M_CONTINUOUS = false;
 
     if(GetAsyncKeyState(0x52))
     {
         keyboard -> R_CONTINUOUS = true;
+    }
+
+    if(GetAsyncKeyState(0x4D))
+    {
+        keyboard -> M_CONTINUOUS = true;
     }
 }
 

@@ -25,6 +25,7 @@ struct Keyboard
 {
     bool R_PRESS;
     bool R_CONTINUOUS;
+    bool M_CONTINUOUS;
 };
 
 struct Collor
