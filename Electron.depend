@@ -14,7 +14,7 @@
 	<iostream>
 	<windows.h>
 
-1610556931 source:c:\users\raducu999\documents\proiecte facultate\electron\main.cpp
+1610559168 source:c:\users\raducu999\documents\proiecte facultate\electron\main.cpp
 	<iostream>
 	<winbgim.h>
 	<graphics.h>
@@ -22,6 +22,7 @@
 	<stdio.h>
 	<stdlib.h>
 	<cstring>
+	<MMSystem.h>
 	"headers/UI.h"
 	"headers/board.h"
 	"headers/zoomandpan.h"

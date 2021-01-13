@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstring>
+#include <MMSystem.h>
 
 #include "headers/UI.h"
 #include "headers/board.h"
@@ -45,6 +46,7 @@ int main()
 
 void openApp()
 {
+    PlaySound(TEXT("bg_music.wav"), NULL, SND_ASYNC);
 
     int xmax=GetSystemMetrics(SM_CXSCREEN);
     int ymax=GetSystemMetrics(SM_CYSCREEN);
