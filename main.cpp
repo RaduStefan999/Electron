@@ -27,28 +27,53 @@ decalaj decalajTabla;
 double zoomScale = 1;
 int laturaPatrat = 20;
 
+//Amandoi
+void openApp();
+//Amandoi
+void boardUpdate();
+//Radu
+void buttonsUpdate();
 
 
-void buttonsUpdate()
+int main()
 {
-    for (int i = 0; i < ButtonsList.lg; i++)
-    {
-        if (contains(ButtonsList.buttons[i].shape, mouse))
-        {
-            ButtonsList.buttons[i].shape.collor = ButtonsList.buttons[i].highlightCollor;
-            if (mouse.LMBClick)
-            {
-                strcpy(elementRuta, ButtonsList.buttons[i].elementRoute);
-                buttonPressed=true;
-            }
-        }
-        else
-        {
-            ButtonsList.buttons[i].shape.collor = ButtonsList.buttons[i].normalCollor;
-        }
+    openApp();
+}
 
-        drawRectangle(ButtonsList.buttons[i].shape);
+void openApp()
+{
+
+    int xmax=GetSystemMetrics(SM_CXSCREEN);
+    int ymax=GetSystemMetrics(SM_CYSCREEN);
+
+    initwindow(xmax, ymax, "");
+
+    if ((float)xmax/ymax > 1.4)
+    {
+        readimagefile ("UI/ElectronMeniu16x9.jpg", 0,0,xmax,ymax);
+        board.xa = 400; board.ya = 40; board.xb = board.xa + 1150; board.yb = board.ya+ 920;
     }
+    else
+    {
+        readimagefile ("UI/ElectronMeniu4x3.jpg", 0,0,xmax,ymax);
+        board.xa = 400; board.ya = 40; board.xb = board.xa + 1000; board.yb = board.ya+ 800;
+    }
+
+    while (ismouseclick(WM_LBUTTONDOWN) == false) {}
+    clearmouseclick(WM_LBUTTONDOWN);
+
+    drawBoard(board, false, decalajTabla, -1);
+    setButtons(&ButtonsList, board);
+
+    while(!GetAsyncKeyState(VK_ESCAPE)){
+        mouseUpdate(&mouse);
+        keyboardUpdate(&keyboard);
+
+        buttonsUpdate();
+        boardUpdate();
+    }
+
+    closegraph();
 }
 
 void boardUpdate()
@@ -144,8 +169,7 @@ void boardUpdate()
                     drawBoard(board, true, decalajTabla, -1);
                 }
             }
-            if(ismouseclick(WM_LBUTTONDBLCLK)){
-                clearmouseclick(WM_LBUTTONDBLCLK);
+            if(mouse.DClick){
                 int indexPiesaSelectata = indexOcupiesSpace(board, cursorPosition, decalajTabla);
                 if(indexPiesaSelectata !=-1){
                         board.elements[indexPiesaSelectata].display_continut=true;
@@ -169,42 +193,24 @@ void boardUpdate()
             }
 }
 
-void openApp()
+void buttonsUpdate()
 {
-
-    int xmax=GetSystemMetrics(SM_CXSCREEN);
-    int ymax=GetSystemMetrics(SM_CYSCREEN);
-
-    board.xa = 400; board.ya = 40; board.xb = board.xa + 1000; board.yb = board.ya+ 800;
-
-    initwindow(xmax, ymax, "");
-
-    if ((float)xmax/ymax > 1.4)
+    for (int i = 0; i < ButtonsList.lg; i++)
     {
-        readimagefile ("UI/ElectronMeniu16x9.jpg", 0,0,xmax,ymax);
+        if (contains(ButtonsList.buttons[i].shape, mouse))
+        {
+            ButtonsList.buttons[i].shape.collor = ButtonsList.buttons[i].highlightCollor;
+            if (mouse.LMBClick)
+            {
+                strcpy(elementRuta, ButtonsList.buttons[i].elementRoute);
+                buttonPressed=true;
+            }
+        }
+        else
+        {
+            ButtonsList.buttons[i].shape.collor = ButtonsList.buttons[i].normalCollor;
+        }
+
+        drawRectangle(ButtonsList.buttons[i].shape);
     }
-    else
-    {
-        readimagefile ("UI/ElectronMeniu4x3.jpg", 0,0,xmax,ymax);
-    }
-
-    while (ismouseclick(WM_LBUTTONDOWN) == false) {}
-    clearmouseclick(WM_LBUTTONDOWN);
-
-    drawBoard(board, false, decalajTabla, -1);
-    setButtons(&ButtonsList, board);
-
-    while(!GetAsyncKeyState(VK_ESCAPE)){
-        mouseUpdate(&mouse);
-        keyboardUpdate(&keyboard);
-
-        buttonsUpdate();
-        boardUpdate();
-    }
-
-    closegraph();
-}
-int main()
-{
-    openApp();
 }

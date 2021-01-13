@@ -243,7 +243,7 @@ void removePiesa(Board &board, int indexEliminaPiesa)
     {
         if (board.elements[indexEliminaPiesa].connectionPoints[j].legatura != NULL)
         {
-            board.elements[indexEliminaPiesa].connectionPoints[j].legatura -> legatura -> start = false;
+            board.elements[indexEliminaPiesa].connectionPoints[j].legatura -> start = false;
             board.elements[indexEliminaPiesa].connectionPoints[j].legatura -> legatura = NULL;
 
             board.elements[indexEliminaPiesa].connectionPoints[j].start = false;

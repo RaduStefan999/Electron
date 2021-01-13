@@ -17,7 +17,7 @@ struct decalaj;
 struct Mouse
 {
     int x, y;
-    bool LMBClick, RMBClick;
+    bool LMBClick, RMBClick, DClick;
     bool isDraging, justDropped;
 };
 
@@ -54,15 +54,21 @@ struct Buttons
 };
 
 
-
+//Radu
 void setButtons(Buttons *ButtonsList, Board board);
+//Radu
 bool contains (RectangleShape shape, Mouse mouse);
+//Radu
 void drawRectangle (RectangleShape shape);
+//Radu
 void mouseUpdate(Mouse *mouse);
+//Radu
 void keyboardUpdate(Keyboard *keyboard);
-
+//Iulian
 void openDialogBox(Board &board, decalaj decalajTabla);
+//Iulian
 void salvareCircuit(Board boardn, char nume[]);
+//Iulian
 void incarcareCircuit(Board &board, char nume[], decalaj decalajTabla);
 
 #endif // UI_H

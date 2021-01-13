@@ -59,7 +59,7 @@ void mouseUpdate(Mouse *mouse)
     mouse -> x = mousex();
     mouse -> y = mousey();
 
-    mouse -> LMBClick = mouse -> RMBClick = mouse -> justDropped = false ;
+    mouse -> LMBClick = mouse -> RMBClick = mouse -> DClick = mouse -> justDropped = false;
 
     if(ismouseclick(WM_LBUTTONDOWN))
     {
@@ -79,6 +79,12 @@ void mouseUpdate(Mouse *mouse)
     {
         mouse -> RMBClick = true;
         clearmouseclick(WM_RBUTTONDOWN);
+    }
+
+    if(ismouseclick(WM_LBUTTONDBLCLK))
+    {
+        mouse -> DClick = true;
+        clearmouseclick(WM_LBUTTONDBLCLK);
     }
 }
 
@@ -196,7 +202,7 @@ void incarcareCircuit(Board &board, char nume[], decalaj decalajTabla)
 
         fscanf(f, "%d", &board.elements[i].indexMF);
         //cout<<board.elements[i].indexMF<<'\n';
-        cout<<board.elements[i].x<<'\n';
+        //cout<<board.elements[i].x<<'\n';
     /*
         fscanf(f, "%d", &board.elements[i].display_continut);
         fscanf(f, "%d", &board.elements[i].modifica_continut);

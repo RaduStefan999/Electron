@@ -54,22 +54,33 @@ struct Board
 };
 
 
-
+//Iulian
 void puneSimbol(FILE *f, POINT c, Board &board, int indexSimbol);
+//Radu
 void addBoardPiesa (POINT P, Board &board, char elementRuta[100]);
+//Radu
 void modifyBoardPiesa (POINT P, Board &board, int indexCurrentDraggingPiesa);
+//Radu
 void removePiesa(Board &board, int indexEliminaPiesa);
+//Radu
 void rotatePoints(float points[], int rotation);
+//Radu
 void updateConnectionPointRotation(boardElement &element);
-
+//Amandoi
 void drawBoard (Board &board, bool redraw, decalaj decalajTabla, int indexText);
+//Iulian
 void setPattern(Board board, decalaj decalajTabla);
+//Iulian
 void obtinePunctUtil(POINT A, POINT &B, decalaj decalajTabla);
+//Radu
 int indexOcupiesSpace(Board board, POINT P, decalaj decalajTabla);
+//Radu
 connectionPoint *getConnectionPoint(Board &board, POINT cursorPosition, decalaj decalajTabla);
-
+//Iulian
 void displayContinutPiesa(Board &board, int indexPiesaSelectata, decalaj decalajTabla);
+//Iulian
 void modificaContinutPiesa(Board &board,int indexPiesaSelectata, decalaj decalajTabla);
+//Iulian
 void setMF_UM(Board &board, int indexPiesaSelectata);
 
 #endif // board_H
