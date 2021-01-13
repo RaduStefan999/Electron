@@ -132,11 +132,8 @@ void boardUpdate()
             {
                 if (indexCurrentDraggingPiesa != -1 && ( indexOcupiesSpace(board, cursorPosition, decalajTabla) == -1 || indexOcupiesSpace(board, cursorPosition, decalajTabla)==indexCurrentDraggingPiesa))
                 {
-                    if (keyboard.M_CONTINUOUS)
-                    {
-                        modifyBoardPiesa(P, board, indexCurrentDraggingPiesa);
-                        drawBoard(board, true, decalajTabla, -1 );
-                    }
+                    modifyBoardPiesa(P, board, indexCurrentDraggingPiesa);
+                    drawBoard(board, true, decalajTabla, -1 );
                 }
                 else
                 {
