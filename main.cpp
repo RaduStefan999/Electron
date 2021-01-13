@@ -13,6 +13,7 @@
 using namespace std;
 
 Buttons ButtonsList;
+ActionButtons ActionButtonsList;
 Mouse mouse;
 Keyboard keyboard;
 
@@ -33,6 +34,8 @@ void openApp();
 void boardUpdate();
 //Radu
 void buttonsUpdate();
+//Radu
+void actionButtonsUpdate();
 
 
 int main()
@@ -64,12 +67,14 @@ void openApp()
 
     drawBoard(board, false, decalajTabla, -1);
     setButtons(&ButtonsList, board);
+    setActionButtons(&ActionButtonsList, board);
 
     while(!GetAsyncKeyState(VK_ESCAPE)){
         mouseUpdate(&mouse);
         keyboardUpdate(&keyboard);
 
         buttonsUpdate();
+        actionButtonsUpdate();
         boardUpdate();
     }
 
@@ -181,16 +186,6 @@ void boardUpdate()
         }
 
     }
-    if(mouse.LMBClick and mouse.x>board.xb){
-                board.dialogBox.afis=true;
-                board.dialogBox.mod=1; //mod 1= salvare
-                drawBoard(board,true,decalajTabla,-1);
-            }
-    if(mouse.RMBClick and mouse.x>board.xb){
-                board.dialogBox.afis=true;
-                board.dialogBox.mod=2; //mod 1= salvare
-                drawBoard(board,true,decalajTabla,-1);
-            }
 }
 
 void buttonsUpdate()
@@ -212,5 +207,37 @@ void buttonsUpdate()
         }
 
         drawRectangle(ButtonsList.buttons[i].shape);
+    }
+}
+
+void actionButtonsUpdate()
+{
+    for (int i = 0; i < ActionButtonsList.lg; i++)
+    {
+        if (contains(ActionButtonsList.buttons[i].shape, mouse))
+        {
+            ActionButtonsList.buttons[i].shape.collor = ActionButtonsList.buttons[i].highlightCollor;
+            if (mouse.LMBClick)
+            {
+                if (strcmp(ActionButtonsList.buttons[i].code, "save") == 0)
+                {
+                    board.dialogBox.afis=true;
+                    board.dialogBox.mod=1; //mod 1= salvare
+                    drawBoard(board,true,decalajTabla,-1);
+                }
+                if (strcmp(ActionButtonsList.buttons[i].code, "load") == 0)
+                {
+                    board.dialogBox.afis=true;
+                    board.dialogBox.mod=2; //mod 1= salvare
+                    drawBoard(board,true,decalajTabla,-1);
+                }
+            }
+        }
+        else
+        {
+            ActionButtonsList.buttons[i].shape.collor = ActionButtonsList.buttons[i].normalCollor;
+        }
+
+        drawRectangle(ActionButtonsList.buttons[i].shape);
     }
 }

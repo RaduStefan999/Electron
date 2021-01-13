@@ -48,15 +48,30 @@ struct Button
     char elementRoute[100];
 };
 
+struct ActionButton
+{
+    RectangleShape shape;
+    Collor normalCollor;
+    Collor highlightCollor;
+    char code[100];
+};
+
 struct Buttons
 {
     Button buttons[100];
     int lg;
 };
 
+struct ActionButtons
+{
+    ActionButton buttons[100];
+    int lg;
+};
 
 //Radu
 void setButtons(Buttons *ButtonsList, Board board);
+//Radu
+void setActionButtons (ActionButtons *ActionButtonsList, Board board);
 //Radu
 bool contains (RectangleShape shape, Mouse mouse);
 //Radu

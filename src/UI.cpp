@@ -36,6 +36,35 @@ void setButtons(Buttons *ButtonsList, Board board)
     }
 }
 
+void setActionButtons (ActionButtons *ActionButtonsList, Board board)
+{
+    int n;
+    ifstream fin ("UI/actionButtons.txt");
+
+    char textureRoute[100];
+
+    fin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        ActionButton curentButton;
+
+        fin >> curentButton.shape.x >> curentButton.shape.y >> curentButton.shape.width >> curentButton.shape.height;
+
+        curentButton.shape.x = board.xb + curentButton.shape.x;
+
+        fin >> curentButton.normalCollor.r >> curentButton.normalCollor.g >> curentButton.normalCollor.b;
+        fin >> curentButton.highlightCollor.r >> curentButton.highlightCollor.g >> curentButton.highlightCollor.b;
+        fin >> textureRoute;
+        fin >> curentButton.code;
+
+        readimagefile (textureRoute, curentButton.shape.x + 20 ,curentButton.shape.y + 20, curentButton.shape.x + curentButton.shape.width - 20, curentButton.shape.y + curentButton.shape.height - 20);
+
+        ActionButtonsList -> buttons[ActionButtonsList -> lg] = curentButton;
+
+        ActionButtonsList -> lg++;
+    }
+}
+
 bool contains (RectangleShape shape, Mouse mouse)
 {
 
