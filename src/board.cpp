@@ -441,7 +441,7 @@ void displayContinutPiesa(Board &board, int i, decalaj decalajTabla)
         board.elements[i].modifica_continut=false;
         drawBoard(board, true, decalajTabla,-1);
     }
-    else if(tasta==39){  // ssageata dreapta
+    else if(tasta==109){  // ssageata dreapta
         board.elements[i].indexMF= (board.elements[i].indexMF + 1)% board.elements[i].nr_marimi_fizice;
 
         drawBoard(board, true, decalajTabla, i);
